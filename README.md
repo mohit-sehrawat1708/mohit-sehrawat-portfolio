@@ -2,7 +2,7 @@
 
 A one-page portfolio: hero with real screen recordings, about, three projects, toolkit, experience, hackathons and contact.
 It is plain HTML, CSS and JavaScript with no build step and nothing to install. It is hosted on Vercel:
-https://mohit-sehrawat-portfolio.vercel.app
+https://mybasicportfolio.vercel.app
 
 ```
 index.html                       all page content
@@ -56,22 +56,22 @@ The code lives in the GitHub repo **mohit-sehrawat1708/mohit-sehrawat-portfolio*
 2. Under **Import Git Repository**, find **mohit-sehrawat-portfolio** and click **Import**.
    If it is not in the list, use the "Adjust GitHub App Permissions" link there and give Vercel access to that repo.
 3. On the configure screen:
-   - **Project Name:** `mohit-sehrawat-portfolio` (this gives the address https://mohit-sehrawat-portfolio.vercel.app)
+   - **Project Name:** `mybasicportfolio` (this gives the address https://mybasicportfolio.vercel.app)
    - **Framework Preset:** `Other`
    - **Root Directory:** `./` (leave it as it is)
    - **Build and Output Settings:** leave every field empty and every override switched off
    - **Environment Variables:** none
 4. Click **Deploy**. After about half a minute Vercel shows the finished site. Click through to the project dashboard: the
    **Domains** list shows the live address.
-5. Check that the address under **Domains** is exactly `mohit-sehrawat-portfolio.vercel.app`. If Vercel gave the project a
+5. Check that the address under **Domains** is exactly `mybasicportfolio.vercel.app`. If Vercel gave the project a
    different one (for example with a suffix), the site still works, but the link previews and search-engine data point at the
    wrong address until you follow "If the address is taken" below.
 6. Optional checks from a terminal (each line prints the response headers):
    ```
-   curl -sI https://mohit-sehrawat-portfolio.vercel.app/                 # 200, content-security-policy, strict-transport-security
-   curl -sI https://mohit-sehrawat-portfolio.vercel.app/site.webmanifest # 200
-   curl -sI https://mohit-sehrawat-portfolio.vercel.app/no/such/page     # 404 (the "404 lost" page)
-   curl -sI https://mohit-sehrawat-portfolio.vercel.app/resume           # 307 to the résumé PDF
+   curl -sI https://mybasicportfolio.vercel.app/                 # 200, content-security-policy, strict-transport-security
+   curl -sI https://mybasicportfolio.vercel.app/site.webmanifest # 200
+   curl -sI https://mybasicportfolio.vercel.app/no/such/page     # 404 (the "404 lost" page)
+   curl -sI https://mybasicportfolio.vercel.app/resume           # 307 to the résumé PDF
    ```
    Then run https://pagespeed.web.dev on the address for real-world speed scores.
 
@@ -93,12 +93,12 @@ Do not add a folder called `public` to the repo: with the "Other" preset Vercel 
 
 ### If the address is taken, or you rename the project
 
-If `mohit-sehrawat-portfolio.vercel.app` belongs to someone else, Vercel gives the project a different address (shown under
+If `mybasicportfolio.vercel.app` belongs to someone else, Vercel gives the project a different address (shown under
 **Domains** on the project page). You can also add another free `something.vercel.app` address in **Settings → Domains**.
 Renaming the project (**Settings → General → Project Name**) does not change addresses that already exist.
 
-Once you know the final address, replace `https://mohit-sehrawat-portfolio.vercel.app` everywhere it appears (search the folder
-for `mohit-sehrawat-portfolio.vercel.app`), then push:
+Once you know the final address, replace `https://mybasicportfolio.vercel.app` everywhere it appears (search the folder
+for `mybasicportfolio.vercel.app`), then push:
 
 | File | Line | What it is |
 |---|---|---|
@@ -126,7 +126,7 @@ The `.vercel.app` address keeps working.
 
 ### Short résumé link
 
-`/resume` and `/cv` redirect to the résumé PDF, for example https://mohit-sehrawat-portfolio.vercel.app/resume.
+`/resume` and `/cv` redirect to the résumé PDF, for example https://mybasicportfolio.vercel.app/resume.
 Use it on LinkedIn, in emails or on the printed CV. The target is set in `vercel.json` under `"redirects"`. The redirect is
 temporary (307), so you can point it at a different file later without browsers remembering the old one.
 

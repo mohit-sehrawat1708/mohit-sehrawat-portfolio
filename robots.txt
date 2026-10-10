@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://mohit-sehrawat-portfolio.vercel.app/sitemap.xml

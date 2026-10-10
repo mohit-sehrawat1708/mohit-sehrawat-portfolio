@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Page not found · Mohit Sehrawat</title>
+<meta name="description" content="This page does not exist. The portfolio of Mohit Sehrawat is one page, one click away.">
+<meta name="robots" content="noindex">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0b11" media="(prefers-color-scheme: dark)">
+<!-- Vercel serves this file for every missing path, at any depth (/a/b/c), so every URL here starts with "/". -->
+<link rel="icon" href="/favicon.ico" sizes="32x32">
+<link rel="icon" href="/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/apple-touch-icon.png">
+<!-- The one script follows the light/dark choice made on the portfolio (it is a file, not inline: the Content-Security-Policy
+     allows only the portfolio's one hashed inline script). Without it the theme follows the device setting. -->
+<script src="/js/404-theme.js"></script>
+<!-- Tokens and fonts copied from css/style.css (the fonts are the same self-hosted files, Latin subset only). -->
+<style>
+@font-face{font-family:"Schibsted Grotesk";font-style:normal;font-weight:400 900;font-display:swap;src:url(/assets/fonts/schibsted-grotesk-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:300 400;font-display:swap;src:url(/assets/fonts/newsreader-italic-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url(/assets/fonts/jetbrains-mono-500-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+:root{
+color-scheme:light;
+--ground:#f6f5f1; --card:#eceae3; --ink:#0d0e15; --muted:#555869;
+--line:rgba(13,14,21,.12); --line-2:rgba(13,14,21,.24);
+--brand:#2340ff; --brand-deep:#1629c9; --brand-ink:#2340ff; --focus:#2340ff; --sel:rgba(35,64,255,.2);
+--shadow-brand:0 22px 50px -18px rgba(35,64,255,.6);
+--grotesk:"Schibsted Grotesk","Helvetica Neue",Helvetica,Arial,sans-serif;
+--serif:"Newsreader","Iowan Old Style","Palatino Linotype",Georgia,serif;
+--mono:"JetBrains Mono",ui-monospace,"Cascadia Mono",Consolas,monospace;
+--gutter:clamp(16px,4.2vw,60px); --wrap:1320px; --r-ui:999px;
+}
+@media (prefers-color-scheme:dark){
+:root:not([data-theme="light"]){
+color-scheme:dark;
+--ground:#0a0b11; --card:#14151f; --ink:#eef0f7; --muted:#a0a3b6;
+--line:rgba(238,240,247,.11); --line-2:rgba(238,240,247,.22);
+--brand:#2f4aff; --brand-deep:#2340ff; --brand-ink:#8c9cff; --focus:#8c9cff; --sel:rgba(140,156,255,.3);
+}
+}
+:root[data-theme="dark"]{
+color-scheme:dark;
+--ground:#0a0b11; --card:#14151f; --ink:#eef0f7; --muted:#a0a3b6;
+--line:rgba(238,240,247,.11); --line-2:rgba(238,240,247,.22);
+--brand:#2f4aff; --brand-deep:#2340ff; --brand-ink:#8c9cff; --focus:#8c9cff; --sel:rgba(140,156,255,.3);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;min-height:100vh;min-height:100svh;display:flex;flex-direction:column;background:var(--ground);color:var(--ink);
+font:400 16.5px/1.6 var(--grotesk);-webkit-font-smoothing:antialiased;overflow-x:clip}
+::selection{background:var(--sel)}
+:focus-visible{outline:2px solid var(--focus);outline-offset:3px;border-radius:6px}
+a{color:inherit;text-decoration:none}
+p,h1{margin:0}
+svg{display:block}
+.wrap{width:min(100% - 2*var(--gutter),var(--wrap));margin-inline:auto}
+.hdr{display:flex;align-items:center;justify-content:space-between;gap:16px;height:76px}
+.logo{font:800 22px/1 var(--grotesk);letter-spacing:-.04em;text-transform:uppercase;padding:8px 0}
+.logo span{color:var(--brand-ink)}
+.rc{display:inline-flex;align-items:center;gap:6px;font:500 11px/1 var(--mono);letter-spacing:.08em;text-transform:uppercase;
+padding:4px 0;border-bottom:1px dotted var(--line-2);white-space:nowrap;transition:color .16s ease,border-color .16s ease}
+.ic{width:16px;height:16px;flex:none;fill:none;stroke:currentColor;stroke-width:1.75;stroke-linecap:round;stroke-linejoin:round}
+.rc .ic{width:12px;height:12px;stroke-width:2}
+main{flex:1;display:flex;flex-direction:column;justify-content:center;padding-block:clamp(32px,7vh,96px)}
+.k{font:500 12px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);margin-bottom:clamp(14px,2.4vh,28px)}
+.k b{font-weight:500;color:var(--brand-ink)}
+.pair{display:flex;flex-wrap:wrap;align-items:baseline;column-gap:.12em;font-size:clamp(104px,30vw,380px);line-height:.86;font-weight:inherit;margin-left:-.04em}
+.g{font-family:var(--grotesk);font-weight:800;text-transform:uppercase;letter-spacing:-.05em;color:var(--brand)}
+.s{font-family:var(--serif);font-style:italic;font-weight:400;letter-spacing:-.025em;font-size:.5em;line-height:1;color:var(--ink)}
+.lead{margin-top:clamp(20px,3.4vh,36px);max-width:52ch;font-size:clamp(17px,1.45vw,21px);line-height:1.55;color:var(--muted);text-wrap:pretty}
+.actions{display:flex;flex-wrap:wrap;gap:12px;margin-top:clamp(24px,4vh,40px)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:10px;height:56px;padding:0 26px;border-radius:var(--r-ui);
+font:700 13px/1 var(--grotesk);letter-spacing:.12em;text-transform:uppercase;border:1.5px solid transparent;white-space:nowrap;
+transition:background-color .16s ease,border-color .16s ease,transform .16s ease}
+.btn:active{transform:scale(.97)}
+.btn .ic{transition:transform .26s cubic-bezier(.22,1,.36,1)}
+.btn--brand{background:var(--brand);color:#fff;box-shadow:var(--shadow-brand)}
+.btn--line{border-color:var(--line-2);color:var(--ink)}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+.foot{display:flex;flex-wrap:wrap;justify-content:space-between;gap:8px 24px;padding-block:22px;border-top:1px solid var(--line);
+font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
+@media (hover:hover){
+.rc:hover{color:var(--brand-ink);border-color:currentColor}
+.btn--brand:hover{background:var(--brand-deep)} .btn--line:hover{border-color:var(--ink)}
+.btn--brand:hover .ic{transform:translateX(3px)}
+}
+@media (max-width:760px){ .hdr{height:64px} body{font-size:16px} .btn{height:52px;padding:0 22px} .actions .btn{flex:1 1 auto} }
+@media (prefers-reduced-motion:reduce){ *{transition:none!important} }
+</style>
+</head>
+<body>
+<header class="wrap hdr">
+  <a class="logo" href="/" aria-label="Mohit Sehrawat, home">MOHIT<span>.</span></a>
+  <a class="rc" href="/">Home <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+</header>
+<main class="wrap">
+  <p class="k"><b>Error 404</b> · page not found</p>
+  <h1 class="pair"><span class="g">404</span> <span class="s">lost</span><span class="sr-only">: this page could not be found</span></h1>
+  <p class="lead">This page doesn't exist, or it has moved. The whole portfolio lives on one page, so the way back is one click.</p>
+  <div class="actions">
+    <a class="btn btn--brand" href="/">Back to the portfolio <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg></a>
+    <a class="btn btn--line" href="/assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF)<span class="sr-only"> (opens in a new tab)</span></a>
+  </div>
+</main>
+<footer class="wrap foot"><span>© 2026 Mohit Sehrawat</span><span>Gurugram, Haryana, India</span></footer>
+</body>
+</html>

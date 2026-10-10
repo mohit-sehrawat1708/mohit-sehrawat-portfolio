@@ -9,3 +9,6 @@ desktop.ini
 .netlify/
 node_modules/
 *.log
+# Local only
+_react-backup/
+*.zip

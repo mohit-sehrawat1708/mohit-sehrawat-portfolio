@@ -4,22 +4,55 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Mohit Sehrawat · CSE (AI) student building AI tools</title>
-<meta name="description" content="Mohit Sehrawat, B.Tech CSE (AI) student at Gurugram University, builds AI-powered tools, data pipelines and full-stack web apps. Open to internships and entry-level roles.">
+<meta name="description" content="Mohit Sehrawat: B.Tech CSE (AI) student at Gurugram University building AI tools, data pipelines and web apps. Open to internships and entry-level roles.">
 <meta name="author" content="Mohit Sehrawat">
 <meta name="color-scheme" content="light dark">
 <meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0a0b11" media="(prefers-color-scheme: dark)">
-<!-- Open Graph / Twitter. Replace relative URLs with absolute ones after deploy. -->
+<!-- SITE ADDRESS: https://mohit-sehrawat-portfolio.vercel.app/ appears in the canonical link, og:url, og:image, twitter:image and the
+     JSON-LD "url" below, and in robots.txt and sitemap.xml. If the address changes, replace it in all of them (README, "Deploy"). -->
+<link rel="canonical" href="https://mohit-sehrawat-portfolio.vercel.app/">
+<!-- Open Graph / Twitter (link previews need absolute URLs) -->
 <meta property="og:type" content="website">
+<meta property="og:site_name" content="Mohit Sehrawat">
+<meta property="og:locale" content="en_IN">
+<meta property="og:url" content="https://mohit-sehrawat-portfolio.vercel.app/">
 <meta property="og:title" content="Mohit Sehrawat · I build AI tools">
 <meta property="og:description" content="CSE (AI) student at Gurugram University. Readme-Architect AI, AccessLens, AI-Attendance, 5+ national hackathons. Open to internships.">
-<meta property="og:image" content="assets/og-image.png">
-<!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<meta property="og:image" content="https://mohit-sehrawat-portfolio.vercel.app/assets/og-image.png">
+<meta property="og:image:type" content="image/png">
 <meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="I'm Mohit, and I build AI tools: portfolio of Mohit Sehrawat">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Mohit Sehrawat · I build AI tools">
+<meta name="twitter:description" content="CSE (AI) student at Gurugram University. Readme-Architect AI, AccessLens, AI-Attendance, 5+ national hackathons. Open to internships.">
+<meta name="twitter:image" content="https://mohit-sehrawat-portfolio.vercel.app/assets/og-image.png">
+<meta name="twitter:image:alt" content="I'm Mohit, and I build AI tools: portfolio of Mohit Sehrawat">
+<!-- icons: browsers that support SVG use favicon.svg; favicon.ico is the fallback; iOS home screen; Android (site.webmanifest) -->
+<link rel="icon" href="favicon.ico" sizes="32x32">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="manifest" href="site.webmanifest">
+<!-- structured data for search engines (a data block: it never runs, so the CSP needs no hash for it) -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Person",
+  "name": "Mohit Sehrawat",
+  "url": "https://mohit-sehrawat-portfolio.vercel.app/",
+  "jobTitle": "B.Tech CSE (AI) student",
+  "description": "B.Tech Computer Science & Engineering (AI) student at Gurugram University who builds AI-powered tools, data pipelines and full-stack web apps. Open to internships and entry-level roles.",
+  "email": "mailto:m29247396@gmail.com",
+  "address": { "@type": "PostalAddress", "addressLocality": "Gurugram", "addressRegion": "Haryana", "addressCountry": "IN" },
+  "affiliation": { "@type": "CollegeOrUniversity", "name": "Gurugram University" },
+  "alumniOf": { "@type": "EducationalOrganization", "name": "Prince Academy of Higher Education" },
+  "knowsAbout": ["Python", "TypeScript", "Next.js", "Google Gemini API", "TensorFlow", "scikit-learn", "Pandas", "Selenium", "BeautifulSoup"],
+  "sameAs": ["https://github.com/mohit-sehrawat1708", "https://www.linkedin.com/in/mohit-sehrawat-67082a345/"]
+}
+</script>
 
+<!-- CSP: vercel.json allows the next inline script only by its sha256 hash. Change one character inside it (even a space) and the
+     browser blocks it until the hash in vercel.json is updated (README, "Content-Security-Policy"). -->
 <script>
 /* pre-paint: theme + intro gating. Must stay tiny and must never throw. */
 (function(){var d=document.documentElement,t=null,rm=false,seen=null;
@@ -34,21 +67,20 @@ if(!rm){d.classList.add('is-pre');
 })();
 </script>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="preconnect" href="https://cdn.jsdelivr.net">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=Schibsted+Grotesk:wght@400..900&display=swap">
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<!-- one stylesheet: the fonts (assets/fonts/) and Lenis's few CSS rules are inside it, so nothing from another site blocks the first paint -->
 <link rel="stylesheet" href="css/style.css">
 <link rel="preload" as="image" href="assets/gifs/accesslens-poster.jpg" fetchpriority="high">
 
-<!-- libraries: defer = execute in this order after parsing (all verified HTTP 200 on 2026-10-09) -->
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
-<script defer src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+<!-- libraries: defer = execute in this order after parsing (all verified HTTP 200 on 2026-10-09).
+     integrity = SHA-384 of that exact file (Subresource Integrity, checked against the npm package on 2026-10-10): the browser refuses
+     a file that differs. Changing a version number means changing its hash too (README, "Content-Security-Policy"). -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js" integrity="sha384-XmJ9SoHtVOHoQUcKvFAzVXwdkKo1Ie3bhmSoIAkcdsHGaIrVJIkmozyq0FJeb/Ly" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js" integrity="sha384-wl5TeDVvOWt30Pbf8aSo2ZrzsOjddu3avOBvHe+p+OhJt9gP6w9YXmDkN5DK2/dF" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js" integrity="sha384-SWJ0lLVRoipvHh59xj0pL7uC7Ih51F+5smaFtrG+2nr+TlDZU5SYJHmxfolbeNTr" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js" integrity="sha384-QQ7Drnaxr6AM+cySvZNVNIFsvXLGtDLoS5tlUIt2XvIwnqtBtuD7A2KwqlSAWMi1" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js" integrity="sha384-jqpi9VmOdhyLoLURgjCn7EpnG9BbnHW57ibIZoeaIU+erWDH3k8fQQg0xH2ySjnw" crossorigin="anonymous"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js" integrity="sha384-ZRKYEXtLBVeqs9z1WxyeKutCqnkqolS/r1EUWuoUpG4ZKbnRAIXnHhHdnNuiB6CL" crossorigin="anonymous"></script>
 <script defer src="js/main.js"></script>
 </head>
 <body>
@@ -127,9 +159,12 @@ if(!rm){d.classList.add('is-pre');
     </figure>
   </div></div></div>
   <div class="hero__row">
-    <p class="hero__cap" data-in><!-- OPTIONAL PHOTO: add assets/me.jpg (square, at least 400px), then delete the comment markers around the next line.
-      It shows as a 96px greyscale circle just above this caption; if the file is missing the tag removes itself.
-      <img class="me" src="assets/me.jpg" alt="" width="96" height="96" onerror="this.remove()"> --><span>Mohit Sehrawat</span><span class="sep" aria-hidden="true"> · </span><span>B.Tech CSE (AI)</span><span class="sep" aria-hidden="true"> · </span><span>Gurugram University</span><span class="sep" aria-hidden="true"> · </span><span>Class of 2027</span></p>
+    <p class="hero__cap" data-in>
+      <!-- OPTIONAL PHOTO: save a square photo (at least 400px) as assets/me.jpg, then delete only the comment markers at the start
+           and end of the next line, so the img tag itself is left. It shows as a 96px greyscale circle just above this caption.
+           If the file is missing, js/main.js removes the tag. -->
+      <!-- <img class="me" src="assets/me.jpg" alt="" width="96" height="96" data-optional> -->
+      <span>Mohit Sehrawat</span><span class="sep" aria-hidden="true"> · </span><span>B.Tech CSE (AI)</span><span class="sep" aria-hidden="true"> · </span><span>Gurugram University</span><span class="sep" aria-hidden="true"> · </span><span>Class of 2027</span></p>
     <div class="hero__cta" data-in>
       <a class="btn btn--brand btn--lg" href="#work" data-magnetic>See the work <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
       <a class="btn btn--line btn--lg" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener" data-magnetic>Résumé<span class="sr-only"> (PDF, opens in a new tab)</span></a>
@@ -234,11 +269,11 @@ if(!rm){d.classList.add('is-pre');
         <ul class="wc-stack" aria-label="Stack"><li class="chip">Next.js 15</li><li class="chip">TypeScript</li><li class="chip">Tailwind CSS</li><li class="chip">Gemini API</li><li class="chip">Python</li><li class="chip">Framer Motion</li><li class="chip">Radix UI</li></ul>
         <div class="wc-btns">
           <a class="btn btn--white" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener">Open live <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
-          <a class="btn btn--white-line" href="https://github.com/mohit-sehrawat1708/Readme-Architect-AI" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--white-line" href="https://github.com/mohit-sehrawat1708/Readme-Architect-AI" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> for Readme-Architect AI (opens in a new tab)</span></a>
         </div>
       </div>
       <div class="wc-media" data-clip data-allow-overflow>
-        <a class="wc-media__link" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener" data-cursor="OPEN ↗" aria-label="Open Readme-Architect AI, live site (opens in a new tab)">
+        <a class="wc-media__link" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener" data-cursor="OPEN ↗" aria-label="readmearchitect.vercel.app Real screen recording · live site: open Readme-Architect AI (opens in a new tab)">
           <div class="dev-pos dev-pos--browser"><div class="device__tilt" data-tilt="8"><figure class="device device--browser">
             <div class="bbar"><i></i><i></i><i></i><span class="url">readmearchitect.vercel.app</span></div>
             <div class="screen" data-bg="assets/gifs/readme-architect-poster.jpg"><picture class="anim" data-anim>
@@ -267,12 +302,12 @@ if(!rm){d.classList.add('is-pre');
         <ul class="wc-stack" aria-label="Stack"><li class="chip">JavaScript</li><li class="chip">Node.js</li><li class="chip">HTML</li><li class="chip">CSS</li></ul>
         <div class="wc-btns">
           <!-- When AccessLens is redeployed, add its live URL here -->
-          <a class="btn btn--white" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--white" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> for AccessLens (opens in a new tab)</span></a>
         </div>
       </div>
       <div class="wc-media" data-clip data-allow-overflow>
         <!-- When AccessLens is redeployed, add its live URL here -->
-        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="AccessLens source code on GitHub (opens in a new tab)">
+        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="localhost:3000 · accesslens Real screen recording · local build: AccessLens source code on GitHub (opens in a new tab)">
           <div class="dev-pos dev-pos--browser"><div class="device__tilt" data-tilt="8"><figure class="device device--browser device--paper">
             <div class="bbar"><i></i><i></i><i></i><span class="url">localhost:3000 · accesslens</span></div>
             <div class="screen" data-bg="assets/gifs/accesslens-poster.jpg"><picture class="anim" data-anim>
@@ -300,12 +335,12 @@ if(!rm){d.classList.add('is-pre');
         </ul>
         <ul class="wc-stack" aria-label="Stack"><li class="chip">Python</li><li class="chip">TypeScript</li><li class="chip">JavaScript</li><li class="chip">Gemini (AI Studio)</li></ul>
         <div class="wc-btns">
-          <a class="btn btn--ink" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--ink" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> for AI-Attendance (opens in a new tab)</span></a>
         </div>
         <p class="wc-note">No live demo. The phone screen is an illustration of the flow, not a recording.</p>
       </div>
       <div class="wc-media" data-clip data-allow-overflow>
-        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="AI-Attendance source code on GitHub (opens in a new tab)">
+        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="Illustrative UI: AI-Attendance source code on GitHub (opens in a new tab)">
           <div class="dev-pos dev-pos--phone"><div class="device__tilt" data-tilt="8"><figure class="device device--phone">
             <div class="frame"><div class="scr" data-bg="assets/gifs/attendance-phone-poster.jpg"><picture class="anim" data-anim>
               <source type="image/webp" srcset="assets/gifs/attendance-phone-poster.jpg" data-srcset="assets/gifs/attendance-phone.webp">

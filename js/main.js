@@ -135,6 +135,22 @@ const Tabs = { cur:0, timer:0, due:0, remain:9000, started:false, stopped:false,
 const FX = [.5,.26,.8,.4,.64,.14,.55,.32,.74,.2,.9,.46,.08,.68], ANG = [-.3,.18,.42,-.12,.2,-.35,.1,.3,-.22,.25,-.4,.15,-.18,.35];
 const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, lastW:0, engine:null, bodies:null, state:'idle',
   live:false, rm:false, visible:false, handed:false, running:false, mouse:null, mcEngine:null, playFn:null, raf:0, stepFn:null, acc:0, asleep:false, op:[],
+  /* start the offline drop early (as soon as the fonts are in), in idle slices of a few ms, so that setup() finds it finished
+     instead of running all of it (250+ ms on a mid-range phone) in one long task. Same steps, same result: only the timing differs */
+  prime(){
+    const el = $('[data-pile]'); if (!el || this.inited || this.pre || !window.Matter) return;
+    try { Matter.Common.logLevel = 0; } catch (e) {}
+    this.el = el; this.items = $$(':scope > li', el);
+    el.classList.add('is-physics', 'is-waiting');   /* is-waiting: the pills stay hidden until init() places them */
+    const W = el.clientWidth, dims = this.items.map(li => ({ w:li.offsetWidth, h:li.offsetHeight }));
+    if (!W || dims.some(d => !d.w || !d.h)) return;
+    const st = this.pre = this.simBegin(W, dims);
+    const later = window.requestIdleCallback ? f => requestIdleCallback(f, { timeout:100 }) : f => setTimeout(f, 16);
+    const slice = d => { if (this.pre !== st || st.done) return;
+      const ms = d && d.timeRemaining ? clamp(3, 8, d.timeRemaining() - 1) : 6;
+      try { if (!this.simRun(st, ms)) later(slice); } catch (e) { if (this.pre === st) this.pre = null; } };
+    later(slice);
+  },
   init(){
     const el = this.el = $('[data-pile]'); if (!el || this.inited) return; this.inited = true;
     this.items = $$(':scope > li', el);
@@ -142,6 +158,7 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
     try { Matter.Common.logLevel = 0; } catch (e) {}
     this.rm = mqRM.matches; this.live = mqFine.matches && !this.rm && !!window.gsap;   /* drag needs the GSAP ticker */
     if (!this.layout()) return this.fallback();
+    el.classList.remove('is-waiting');   /* set by prime(); arm() sets it again while the drop waits to be seen */
     el.classList.toggle('is-live', this.live); el.classList.toggle('can-replay', !this.rm);
     this.arm();
     if ('ResizeObserver' in window) new ResizeObserver(debounce(() => { if (this.rec && Math.abs(el.clientWidth - this.lastW) >= 1) this.resim(); }, 150)).observe(el);
@@ -161,10 +178,15 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
   layout(){
     const el = this.el; el.classList.add('is-physics');
     const W = el.clientWidth;
-    this.dims = this.items.map(li => ({ w:li.offsetWidth, h:li.offsetHeight }));
-    if (!W || this.dims.some(d => !d.w || !d.h)) return false;
+    const dims = this.dims = this.items.map(li => ({ w:li.offsetWidth, h:li.offsetHeight }));
+    if (!W || dims.some(d => !d.w || !d.h)) return false;
     const t0 = performance.now(); let ok = false;
-    try { ok = this.simulate(W); } catch (e) { ok = false; }
+    try {
+      /* reuse prime()'s run (finished, or finished here) when nothing was resized in between; otherwise run it all now */
+      const p = this.pre; this.pre = null;
+      const st = p && p.W === W && p.dims.every((d, i) => d.w === dims[i].w && d.h === dims[i].h) ? p : this.simBegin(W, dims);
+      this.simRun(st, Infinity); ok = this.simEnd(st);
+    } catch (e) { ok = false; }
     this.simMs = Math.round(performance.now() - t0);
     if (!ok) return false;
     const prev = this.H; this.lastW = W; this.H = this.Hn;
@@ -172,7 +194,7 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
     if (prev && prev !== this.H) refreshLater();
     return true;
   },
-  simulate(W){
+  simBegin(W, dims){
     const { Engine, Bodies, Body, Composite, Events } = Matter;
     const engine = Engine.create({ enableSleeping:true, positionIterations:12, velocityIterations:8 });
     engine.gravity.y = 1.15;
@@ -183,7 +205,7 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
     ]);
     const narrow = W < 600;
     const bodies = this.items.map((li, i) => {
-      const { w, h } = this.dims[i], r = h / 2, l = Math.max(0, (w - h) / 2), v = [];
+      const { w, h } = dims[i], r = h / 2, l = Math.max(0, (w - h) / 2), v = [];
       for (let k = 0; k <= 14; k++) { const t = -Math.PI / 2 + k * Math.PI / 14; v.push({ x:l + Math.cos(t) * r, y:Math.sin(t) * r }); }
       for (let k = 0; k <= 14; k++) { const t = Math.PI / 2 + k * Math.PI / 14; v.push({ x:-l + Math.cos(t) * r, y:Math.sin(t) * r }); }
       const b = Bodies.fromVertices(w / 2 + FX[i % 14] * Math.max(0, W - w), -h - 40 - i * h * 1.25, [v],
@@ -196,12 +218,21 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
     const rec = [], hit = bodies.map(() => null);
     Events.on(engine, 'collisionStart', e => e.pairs.forEach(p => [p.bodyA, p.bodyB].forEach(part => {
       const b = part.parent || part; if (!b.isStatic && b.k != null && hit[b.k] == null) hit[b.k] = rec.length; })));
-    const dt = 1000 / 120;
-    for (let s = 0; s < 1500; s++) {
-      Engine.update(engine, dt);
+    return { W, dims, engine, bodies, rec, hit, s:0, done:false };
+  },
+  simRun(st, ms){   /* up to 1500 steps at 120 Hz, stopping once every pill sleeps; returns after about ms milliseconds, true when done */
+    const end = performance.now() + ms, dt = 1000 / 120, { engine, bodies, rec } = st;
+    while (!st.done) {
+      const s = st.s++;
+      Matter.Engine.update(engine, dt);
       if (s % 2 === 0) rec.push(bodies.map(b => [b.position.x, b.position.y, b.angle]));
-      if (s > 200 && bodies.every(b => b.isSleeping)) break;
+      if (st.s >= 1500 || (s > 200 && bodies.every(b => b.isSleeping))) st.done = true;
+      else if (performance.now() >= end) break;
     }
+    return st.done;
+  },
+  simEnd(st){
+    const { W, dims, engine, bodies, rec, hit } = st;
     rec.push(bodies.map(b => [b.position.x, b.position.y, b.angle]));
     const fin = rec[rec.length - 1];
     /* drop the visually still tail (sub-pixel settling), so playback ends when the motion does */
@@ -210,7 +241,7 @@ const Pile = { el:null, items:[], dims:[], rec:null, hit:null, shift:null, H:0, 
     rec.length = Math.min(rec.length, end + 2); rec[rec.length - 1] = fin;
     if (fin.some(f => !isFinite(f[0]) || !isFinite(f[1]) || f[1] > 40)) return false;
     this.shift = fin.map(f => Math.round(f[2] / Math.PI) * Math.PI);
-    const top = Math.min(...fin.map((f, i) => f[1] - Math.abs(Math.sin(f[2])) * (this.dims[i].w / 2) - this.dims[i].h / 2));
+    const top = Math.min(...fin.map((f, i) => f[1] - Math.abs(Math.sin(f[2])) * (dims[i].w / 2) - dims[i].h / 2));
     this.Hn = Math.ceil(-top + (W < 650 ? 28 : 56));
     Object.assign(this, { engine, bodies, rec, hit });
     return true;
@@ -436,7 +467,8 @@ function initFooterCurtainGate(){
   /* curtain only if the whole footer fits under the fixed header */
   const check = curtainCheck = () => { root.classList.toggle('no-curtain', footer.offsetHeight > innerHeight - headerH());
     const on = curtainOn(); if (last !== null && on !== last) { onCurtainFlip?.(); refreshLater(); } last = on; };
-  check(); addEventListener('resize', debounce(check, 200));
+  requestAnimationFrame(() => check());   /* not at boot: reading the footer height there forced an extra layout pass */
+  addEventListener('resize', debounce(check, 200));
   /* behind the curtain the browser never scrolls to footer focus: lift it */
   footer.addEventListener('focusin', () => { if (!curtainOn() || scrollY >= docMax() - 2) return;
     if (lenis) lenis.scrollTo(docMax(), { immediate:true, force:true }); else scrollTo(0, docMax()); });
@@ -449,6 +481,13 @@ function initToTop(){
     if (lenis) lenis.scrollTo(0, { duration:1.4, immediate:mqRM.matches, force:true }); else scrollTo(0, 0);
     $('#main')?.focus({ preventScroll:true });
   }));
+}
+/* optional images (the hero photo, assets/me.jpg): a missing file removes its tag. Not an inline onerror="": the site's
+   Content-Security-Policy blocks inline event handlers. The error may have fired before this deferred script ran, hence the check */
+function initOptionalImages(){
+  $$('img[data-optional]').forEach(img => {
+    if (img.complete && !img.naturalWidth) img.remove(); else img.addEventListener('error', () => img.remove(), { once:true });
+  });
 }
 
 /* ---------------- GSAP systems ---------------- */
@@ -616,15 +655,19 @@ function heroEntrance(){
   const l1 = $$('.hero__l1 .m > span'), rest = $$('.hero__cap, .hero__cta, .hero__note');
   gsap.set(l1, { yPercent:120 });
   gsap.set(split.chars, { yPercent:115 });
-  gsap.set('.hd-in', { y:120, scale:.92, rotation:-9, autoAlpha:0 });
-  gsap.set(rest, { y:18, autoAlpha:0 });
+  /* the device only moves, it never fades: it is the page's largest image, and an invisible image does not count as shown (LCP).
+     CSS draws the same start pose from the first paint (.is-pre .hd-in), so nothing jumps */
+  gsap.set('.hd-in', { y:120, scale:.92, rotation:-9 });
+  /* the row is uncovered by a wipe instead of a fade, so its text is never half-transparent (contrast) */
+  const shut = 'inset(-30% -15% 100% -15%)', open = 'inset(-30% -15% -150% -15%)';   /* the margins keep the button shadows */
+  gsap.set(rest, { y:18, clipPath:shut });
   root.classList.remove('is-pre');
   gsap.timeline()
     .to(l1, { yPercent:0, duration:.9, stagger:.09, ease:'expo.out' }, 0)
     .to(split.chars, { yPercent:0, duration:1.0, stagger:.035, ease:'expo.out' }, .08)
-    .to('.hd-in', { y:0, scale:1, autoAlpha:1, duration:.9, ease:'expo.out' }, .35)
-    .to('.hd-in', { rotation:() => innerWidth <= 820 ? -1.5 : -2, duration:1.2, ease:'elastic.out(1,.75)' }, .35)
-    .to(rest, { y:0, autoAlpha:1, duration:.7, stagger:.06, ease:'expo.out' }, .6)
+    .to('.hd-in', { y:0, scale:1, duration:.9, ease:'expo.out' }, .15)
+    .to('.hd-in', { rotation:() => innerWidth <= 820 ? -1.5 : -2, duration:1.2, ease:'elastic.out(1,.75)' }, .15)
+    .fromTo(rest, { clipPath:shut }, { y:0, clipPath:open, duration:.7, stagger:.06, ease:'expo.out', clearProps:'clipPath' }, .6)
     .add(() => { introDone = true; Media.update(); Tabs.start(); }, .5)
     .add(() => marqueeRamp?.play(), .7)
     .add(() => { gsap.ticker.lagSmoothing(0); split.masks?.forEach(m => { m.style.overflow = 'visible'; }); }, 1.6);   /* masks only serve the rise */
@@ -769,7 +812,7 @@ function buildScenes(){
     const tl = gsap.timeline({ scrollTrigger:{ trigger:p, start:'top 80%', end:'bottom 55%', scrub:.4 } });
     items.forEach((el, i) => el.classList.contains('ig')
       ? tl.fromTo(el, { opacity:.25, scale:.6 }, { opacity:1, scale:1, duration:.3, ease:'none' }, i * .1)
-      : tl.fromTo(el, { opacity:.16 }, { opacity:1, duration:.3, ease:'none' }, i * .1));
+      : tl.fromTo(el, { opacity:.45 }, { opacity:1, duration:.3, ease:'none' }, i * .1));   /* .45: unread words still pass 3:1 contrast in both themes */
     $$('.hl', p).forEach(hl => { const last = $$('.w', hl).pop(); if (!last) return;
       tl.fromTo(hl, { backgroundSize:'0% .38em' }, { backgroundSize:'100% .38em', duration:.4, ease:'none' }, items.indexOf(last) * .1); });
     return () => split.revert();
@@ -778,10 +821,11 @@ function buildScenes(){
   mm.add(M, () => {
     if ($('.facts__rule')) gsap.from('.facts__rule', { scaleX:0, duration:.6, ease:'expo.out', scrollTrigger:{ trigger:'.facts-wrap', start:'top 85%', once:true } });
     const nums = $$('[data-count]');
+    /* the real number stays in the page until the count starts (crawlers, reader mode and translation never read "0+");
+       the fact is still hidden by its reveal (.rv) when the count starts, so the switch to 0 is never seen */
     nums.forEach(el => { const end = +el.dataset.count, o = { v:0 };
-      gsap.to(o, { v:end, duration:1.6, ease:'power3.out', onUpdate:() => { el.textContent = Math.round(o.v); },
-        scrollTrigger:{ trigger:el, start:'top bottom-=24', once:true } });   /* as soon as it shows: never a lingering "0+" on screen */
-      el.textContent = '0'; });
+      gsap.to(o, { v:end, duration:1.6, ease:'power3.out', onStart:() => { el.textContent = '0'; }, onUpdate:() => { el.textContent = Math.round(o.v); },
+        scrollTrigger:{ trigger:el, start:'top bottom-=24', once:true } }); });   /* as soon as it shows: never a lingering "0+" on screen */
     return () => nums.forEach(el => { el.textContent = el.dataset.count; });
   });
   /* 7. media clip reveals (once); cleared when done so the scaling cards never raster through a mask */
@@ -833,13 +877,14 @@ const setup = () => { if (setupDone) return; setupDone = true;
 };
 const guard = setTimeout(() => { if (hasGSAP) { safe(setup); safe(() => gsap.ticker.lagSmoothing(0)); } finish(); }, 5000);
 safe(initTheme); safe(initHeader); safe(initMenu); safe(initCopy); safe(() => Media.init()); safe(initReveals); safe(initLocalTime);
-safe(initFooterCurtainGate); safe(initAnchors); safe(initToTop); safe(initPrint); safe(() => Tabs.init());
+safe(initFooterCurtainGate); safe(initAnchors); safe(initToTop); safe(initPrint); safe(initOptionalImages); safe(() => Tabs.init());
 if (!hasGSAP) { finish(); safe(() => Pile.init()); clearTimeout(guard); return; }
 gsap.registerPlugin(ScrollTrigger, SplitText, ...(window.ScrambleTextPlugin ? [ScrambleTextPlugin] : []));
 safe(initLenis); if (root.classList.contains('is-intro')) lenis?.stop();
 safe(initCursor); safe(initMagnetic); safe(initTilt); safe(initPreview); safe(initReceipts);
 const fonts = Promise.race([document.fonts ? document.fonts.ready : Promise.resolve(), new Promise(r => setTimeout(r, 700))]);
 fonts.then(() => {
+  safe(() => Pile.prime());          /* the drop simulation runs in idle slices during the intro; setup() only finishes it */
   if (root.classList.contains('is-intro')) return playIntro(setup);
   setup(); return null;
 }).then(() => {

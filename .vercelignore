@@ -1,0 +1,9 @@
+# Files that are in the repo (or the folder) but are not part of the website.
+# Vercel skips these on every deploy (Git import or CLI). Same syntax as .gitignore.
+_react-backup/
+*.zip
+README.md
+.nojekyll
+.git
+.gitignore
+.vercelignore

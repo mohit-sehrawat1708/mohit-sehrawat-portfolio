@@ -1,5 +1,28 @@
 /* Mohit Sehrawat — "PROOF OF work" portfolio. Hand-written CSS, no build step. */
 
+/* ============ FONTS (self-hosted, SIL Open Font License 1.1) ============ */
+/* Latin + Latin Extended subsets from Google Fonts. A browser downloads a file only when the page uses a character in its
+   unicode-range. Paths are relative to this file, so they also work when index.html is opened from disk. */
+@font-face{font-family:"Schibsted Grotesk";font-style:normal;font-weight:400 900;font-display:swap;src:url(../assets/fonts/schibsted-grotesk-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Schibsted Grotesk";font-style:normal;font-weight:400 900;font-display:swap;src:url(../assets/fonts/schibsted-grotesk-latin-ext.woff2) format("woff2");
+unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:300 400;font-display:swap;src:url(../assets/fonts/newsreader-italic-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"Newsreader";font-style:italic;font-weight:300 400;font-display:swap;src:url(../assets/fonts/newsreader-italic-latin-ext.woff2) format("woff2");
+unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url(../assets/fonts/jetbrains-mono-500-latin.woff2) format("woff2");
+unicode-range:U+0000-00FF,U+0131,U+0152-0153,U+02BB-02BC,U+02C6,U+02DA,U+02DC,U+0304,U+0308,U+0329,U+2000-206F,U+20AC,U+2122,U+2191,U+2193,U+2212,U+2215,U+FEFF,U+FFFD}
+@font-face{font-family:"JetBrains Mono";font-style:normal;font-weight:500;font-display:swap;src:url(../assets/fonts/jetbrains-mono-500-latin-ext.woff2) format("woff2");
+unicode-range:U+0100-02BA,U+02BD-02C5,U+02C7-02CC,U+02CE-02D7,U+02DD-02FF,U+0304,U+0308,U+0329,U+1D00-1DBF,U+1E00-1E9F,U+1EF2-1EFF,U+2020,U+20A0-20AB,U+20AD-20C4,U+2113,U+2C60-2C7F,U+A720-A7FF}
+
+/* ============ LENIS 1.3.26 (its lenis.css, copied here so it is not a separate request) ============ */
+html.lenis,html.lenis body{height:auto}
+.lenis:not(.lenis-autoToggle).lenis-stopped{overflow:clip}
+.lenis [data-lenis-prevent],.lenis [data-lenis-prevent-wheel],.lenis [data-lenis-prevent-touch],.lenis [data-lenis-prevent-vertical],.lenis [data-lenis-prevent-horizontal]{overscroll-behavior:contain}
+.lenis.lenis-smooth iframe{pointer-events:none}
+.lenis.lenis-autoToggle{transition-property:overflow;transition-duration:1ms;transition-behavior:allow-discrete}
+
 /* ============ TOKENS ============ */
 :root{
 color-scheme:light;
@@ -164,7 +187,13 @@ font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;white-
 .is-intro .intro{display:grid}
 .is-intro:not(.booted) .intro{animation:bail 0s linear 3.4s forwards}
 .is-pre [data-in]{opacity:0}
+/* the hero device's start pose (js/main.js heroEntrance animates from it). The device is the page's largest image: it is visible
+   from the first paint and only moves, never fades, so it counts as shown at once (LCP) */
+.is-pre .hd[data-in]{opacity:1}
+.is-pre .hd-in{transform:translateY(120px) scale(.92) rotate(-9deg)}
 .is-pre:not(.booted) [data-in]{animation:unhide 0s linear 3.6s forwards}
+.is-pre:not(.booted) .hd-in{animation:unpose 0s linear 3.6s forwards}
+@keyframes unpose{to{transform:var(--rest,none)}}
 .js:not(.booted) .rv{animation:unhide-rv 0s linear 3.5s forwards}
 @keyframes bail{to{visibility:hidden;opacity:0;pointer-events:none}}
 @keyframes unhide{to{opacity:1}}
@@ -226,7 +255,7 @@ font:700 12px/1 var(--grotesk);letter-spacing:.14em;text-transform:uppercase;tra
 .hero__l1{display:flex;justify-content:space-between;width:min(100%,calc(var(--f2)*4.53));font:340 var(--f1)/1.05 var(--serif);font-style:italic;letter-spacing:-.025em;white-space:nowrap;gap:.3em}
 .hero__l2{display:block;font:800 var(--f2)/.86 var(--grotesk);text-transform:uppercase;letter-spacing:-.045em;color:var(--brand);white-space:nowrap;margin-top:calc(var(--f1)*-.12)}
 .hd{position:relative;z-index:var(--z-dev);width:var(--dev);margin-top:calc(var(--f2)*-.2)}
-.hd-in{transform:rotate(-2deg)}
+.hd-in{--rest:rotate(-2deg);transform:var(--rest)}
 .hd-float{animation:float 6s ease-in-out infinite alternate}
 @keyframes float{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
 .js .hero:not(.is-visible) .hd-float,.is-paused .hd-float{animation-play-state:paused}
@@ -277,7 +306,7 @@ html:not(.js) .pz{display:none}
 .hero{min-height:auto}
 .hero__stage{padding-bottom:clamp(16px,3vh,28px)}
 .hero__l1{width:100%}
-.hd{width:100%;margin-top:calc(var(--f2)*-.14)} .hd-in{transform:rotate(-1.5deg)}
+.hd{width:100%;margin-top:calc(var(--f2)*-.14)} .hd-in{--rest:rotate(-1.5deg)}
 /* + 1.6vw: room for the corner the -1.5deg tilt drops (about 1.3% of the width) */
 .hero__row{grid-template-columns:1fr;justify-items:start;margin-top:calc(18px + 1.6vw);gap:18px}
 .hero__cap{font-size:10.5px;max-width:none;display:block} .hero__cap::before{display:none} .hero__cap .sep{display:inline}
@@ -290,6 +319,10 @@ html:not(.js) .pz{display:none}
 @container (max-width:340px){ .tabs [role=tab]{padding:6px 8px;font-size:9.5px} .t-long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap} .t-short{display:inline} .tabs{margin-left:4px} }
 @media (max-width:360px){ .hero-dev .bbar>i:nth-child(n+2){display:none} .live{font-size:10px} }
 @media (pointer:coarse){ .tabs [role=tab]{padding-block:10px} .live{padding-block:10px} }
+/* the bar paints above the screen link (the tabs must never sit under it: tilted, the screen's box reaches up over the bar), and on
+   touch screens it is tall enough to hold the 33 px tap targets above, progress line included */
+.hero-dev .bbar{position:relative;z-index:1}
+@media (pointer:coarse){ .hero-dev.device--browser .bbar{min-height:34px} }
 .me{width:96px;height:96px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply}
 :root[data-theme="dark"] .me{mix-blend-mode:normal}
 /* optional photo (commented out in the hero caption): sits above the caption's rule without changing the hero's height */
@@ -341,6 +374,7 @@ html:not(.js) .strip::after{display:none}
 .idx__name .s{font-size:.5em;color:var(--muted);transition:color var(--d2) ease}
 .idx__stack{font:500 11px/1.4 var(--mono);letter-spacing:.08em;text-transform:uppercase;color:var(--muted);text-align:right}
 .idx__rc{display:flex;gap:16px;justify-content:flex-end}
+.idx__rc .rc{min-height:24px}   /* a 24 px tap target (WCAG 2.5.8): on phones these sit right under the full-width row link */
 @media (hover:hover){ .idx__row:hover .idx__name{transform:translateX(12px);color:var(--brand-ink)} .idx__row:hover .idx__name .s{color:var(--brand-ink)} }
 .idx__link:focus-visible .idx__name{color:var(--brand-ink)}
 @media (max-width:760px){
@@ -685,13 +719,15 @@ html:not(.js) .ftime{display:none}
 @media (pointer:coarse){ .foot ul a{min-height:40px} .foot ul{gap:2px} }
 /* ============ MENU ============ */
 .menu{position:fixed;inset:0;z-index:var(--z-menu);background:var(--cobalt);color:#fff;display:none;visibility:hidden;
-clip-path:inset(0 0 100% 0);transition:clip-path 560ms var(--ease-io),visibility 0s linear 560ms;overflow-y:auto;overscroll-behavior:contain}
+clip-path:inset(0 0 100% 0);transition:clip-path 560ms var(--ease-io),visibility 0s linear 560ms;overflow-y:auto;overscroll-behavior:contain;
+scroll-padding-top:var(--header-h)}
 .menu.is-mounted{display:flex;flex-direction:column}
 .menu.is-open{visibility:visible;clip-path:inset(0 0 0 0);transition:clip-path 560ms var(--ease-io),visibility 0s}
 .js .menu .stag{opacity:0;transform:translateY(26px);transition:opacity 420ms ease,transform 640ms var(--ease-out)}
 .js .menu.is-open .stag{opacity:1;transform:none;transition-delay:calc(160ms + var(--i,0)*45ms)}
 .menu :focus-visible{outline-color:#fff}
-.menu__top{flex:none;height:var(--header-h);display:flex;align-items:center;justify-content:space-between}
+/* sticky: Close stays on screen when the menu scrolls (short screens, or opened on "The 30-second version", which scrolls to it) */
+.menu__top{flex:none;height:var(--header-h);display:flex;align-items:center;justify-content:space-between;position:sticky;top:0;z-index:1;background:var(--cobalt)}
 .menu__top .logo span{color:#0d0e15}
 .menu__close{display:inline-flex;align-items:center;gap:12px;height:44px;padding:0 6px 0 18px;border-radius:var(--r-ui);background:#fff;color:#0d0e15;
 font:700 12px/1 var(--grotesk);letter-spacing:.14em;text-transform:uppercase}

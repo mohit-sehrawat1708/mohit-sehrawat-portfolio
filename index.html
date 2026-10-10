@@ -1,0 +1,574 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Mohit Sehrawat · CSE (AI) student building AI tools</title>
+<meta name="description" content="Mohit Sehrawat, B.Tech CSE (AI) student at Gurugram University, builds AI-powered tools, data pipelines and full-stack web apps. Open to internships and entry-level roles.">
+<meta name="author" content="Mohit Sehrawat">
+<meta name="color-scheme" content="light dark">
+<meta name="theme-color" content="#f6f5f1" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0a0b11" media="(prefers-color-scheme: dark)">
+<!-- Open Graph / Twitter. Replace relative URLs with absolute ones after deploy. -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="Mohit Sehrawat · I build AI tools">
+<meta property="og:description" content="CSE (AI) student at Gurugram University. Readme-Architect AI, AccessLens, AI-Attendance, 5+ national hackathons. Open to internships.">
+<meta property="og:image" content="assets/og-image.png">
+<!-- <meta property="og:url" content="https://YOUR-DOMAIN/"> -->
+<meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="I'm Mohit, and I build AI tools: portfolio of Mohit Sehrawat">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+
+<script>
+/* pre-paint: theme + intro gating. Must stay tiny and must never throw. */
+(function(){var d=document.documentElement,t=null,rm=false,seen=null;
+d.classList.add('js');
+try{t=localStorage.getItem('ms-theme')}catch(e){}
+if(t!=='light'&&t!=='dark'){try{t=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}catch(e){t='light'}}
+d.setAttribute('data-theme',t);try{var mc=document.querySelectorAll('meta[name="theme-color"]');for(var i=0;i<mc.length;i++)mc[i].setAttribute('content',t==='dark'?'#0a0b11':'#f6f5f1')}catch(e){}
+try{rm=matchMedia('(prefers-reduced-motion: reduce)').matches}catch(e){}
+if(!rm){d.classList.add('is-pre');
+ try{seen=sessionStorage.getItem('ms-intro')}catch(e){}
+ if(!seen&&!location.hash){d.classList.add('is-intro')}}
+})();
+</script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preconnect" href="https://cdn.jsdelivr.net">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@500&family=Newsreader:ital,opsz,wght@1,6..72,300..500&family=Schibsted+Grotesk:wght@400..900&display=swap">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.css">
+<link rel="stylesheet" href="css/style.css">
+<link rel="preload" as="image" href="assets/gifs/accesslens-poster.jpg" fetchpriority="high">
+
+<!-- libraries: defer = execute in this order after parsing (all verified HTTP 200 on 2026-10-09) -->
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/gsap.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrollTrigger.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/SplitText.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/gsap@3.15.0/dist/ScrambleTextPlugin.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/lenis@1.3.26/dist/lenis.min.js"></script>
+<script defer src="https://cdn.jsdelivr.net/npm/matter-js@0.20.0/build/matter.min.js"></script>
+<script defer src="js/main.js"></script>
+</head>
+<body>
+
+<!-- icon sprite (Lucide grammar: 24 viewBox, currentColor, 1.75 stroke, round caps) -->
+<svg xmlns="http://www.w3.org/2000/svg" style="display:none">
+  <symbol id="i-sun" viewBox="0 0 24 24"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41"/></symbol>
+  <symbol id="i-moon" viewBox="0 0 24 24"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"/></symbol>
+  <symbol id="i-arrow-right" viewBox="0 0 24 24"><path d="M5 12h14M12 5l7 7-7 7"/></symbol>
+  <symbol id="i-arrow-down" viewBox="0 0 24 24"><path d="M12 5v14M19 12l-7 7-7-7"/></symbol>
+  <symbol id="i-arrow-up" viewBox="0 0 24 24"><path d="M12 19V5M5 12l7-7 7 7"/></symbol>
+  <symbol id="i-arrow-up-right" viewBox="0 0 24 24"><path d="M7 7h10v10M7 17 17 7"/></symbol>
+  <symbol id="i-pause" viewBox="0 0 24 24"><rect x="6" y="4" width="4" height="16" rx="1"/><rect x="14" y="4" width="4" height="16" rx="1"/></symbol>
+  <symbol id="i-play" viewBox="0 0 24 24"><path d="M7 4.5v15a1 1 0 0 0 1.5.86l12.5-7.5a1 1 0 0 0 0-1.72L8.5 3.64A1 1 0 0 0 7 4.5Z"/></symbol>
+  <symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol>
+  <symbol id="i-check" viewBox="0 0 24 24"><path d="M20 6 9 17l-5-5"/></symbol>
+  <symbol id="i-rotate" viewBox="0 0 24 24"><path d="M21 12a9 9 0 1 1-9-9c2.52 0 4.93 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/></symbol>
+  <symbol id="i-braces" viewBox="0 0 24 24"><path d="M8 3H7a2 2 0 0 0-2 2v5a2 2 0 0 1-2 2 2 2 0 0 1 2 2v5c0 1.1.9 2 2 2h1"/><path d="M16 21h1a2 2 0 0 0 2-2v-5c0-1.1.9-2 2-2a2 2 0 0 1-2-2V5a2 2 0 0 0-2-2h-1"/></symbol>
+  <symbol id="i-x" viewBox="0 0 24 24"><path d="M18 6 6 18M6 6l12 12"/></symbol>
+  <symbol id="i-ast" viewBox="0 0 24 24"><path d="M12 2.5v19M2.5 12h19M5.3 5.3l13.4 13.4M18.7 5.3 5.3 18.7"/></symbol>
+</svg>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<div class="intro" aria-hidden="true">
+  <div class="intro__in">
+    <p class="intro__name"><span class="g" data-intro-name>Mohit</span><span class="m"><span class="s">sehrawat</span></span></p>
+    <p class="intro__sub" data-intro-sub>CSE (AI) STUDENT — BUILDS AI-POWERED TOOLS — OPEN TO INTERNSHIPS</p>
+  </div>
+  <span class="intro__corner intro__corner--l">GURUGRAM, INDIA</span>
+  <span class="intro__corner intro__corner--r">PORTFOLIO — 2026</span>
+</div>
+
+<header class="hdr" id="hdr"><div class="wrap hdr__in">
+  <a class="logo" href="#top" aria-label="Mohit Sehrawat, back to top">MOHIT<span>.</span></a>
+  <button class="mode" type="button" data-theme-toggle data-magnetic="0.25" aria-label="Change the mode"><span class="mode__ic" aria-hidden="true"><svg class="ic sun"><use href="#i-sun"/></svg><svg class="ic moon"><use href="#i-moon"/></svg></span><span class="mode__t">Change the mode</span></button>
+  <div class="hdr__right">
+    <a class="btn btn--line btn--sm hdr__cv" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener" download data-magnetic="0.25">Résumé <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sr-only"> (PDF, opens in a new tab)</span></a>
+    <button class="menu-btn" type="button" aria-expanded="false" aria-controls="menu" data-menu-open data-magnetic="0.25">Menu<span class="burger" aria-hidden="true"><i></i><i></i></span></button>
+  </div></div><span class="hdr__progress" aria-hidden="true"></span></header>
+
+<main id="main" class="site-main" tabindex="-1">
+
+<!-- ==================== HERO ==================== -->
+<section class="hero" id="top" aria-labelledby="hero-title"><div class="wrap hero__stage">
+  <h1 class="hero__title" id="hero-title">
+    <span class="hero__l1" data-in><span class="m"><span>I'm Mohit,</span></span> <span class="m"><span>and I build</span></span></span>
+    <span class="hero__l2" data-in data-hero-word>AI tools</span>
+  </h1>
+  <div class="hd" data-in><div class="hd-in"><div class="hd-float">
+    <figure class="device device--browser hero-dev" aria-label="Project recordings">
+      <div class="bbar">
+        <i></i><i></i><i></i>
+        <div class="tabs" role="tablist" aria-label="Project recordings">
+          <button type="button" role="tab" id="tab-0" aria-selected="true" aria-controls="hero-screen" tabindex="0" data-tab="0">AccessLens</button>
+          <button type="button" role="tab" id="tab-1" aria-selected="false" aria-controls="hero-screen" tabindex="-1" data-tab="1"><span class="t-long">Readme·Architect</span><span class="t-short" aria-hidden="true">Readme</span></button>
+        </div>
+        <!-- When AccessLens is redeployed, add its live URL here -->
+        <a class="live is-code" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-live><span data-live-t>Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only" data-live-sr2> (opens the AccessLens repository on GitHub in a new tab)</span></a>
+      </div>
+      <div class="screen" id="hero-screen" role="tabpanel" aria-labelledby="tab-0" style="background-image:url(assets/gifs/accesslens-poster.jpg)">
+        <!-- When AccessLens is redeployed, add its live URL here -->
+        <a class="screen__link" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-cursor="CODE ↗">
+          <span class="sr-only" data-live-sr>AccessLens source code on GitHub (opens in a new tab)</span>
+          <picture class="anim shot is-on" data-anim data-shot="0">
+            <source type="image/webp" srcset="assets/gifs/accesslens-poster.jpg" data-srcset="assets/gifs/accesslens.webp">
+            <img src="assets/gifs/accesslens-poster.jpg" data-poster="assets/gifs/accesslens-poster.jpg" data-src="assets/gifs/accesslens.gif" width="960" height="600" alt="Screen recording of AccessLens, running locally from its repository, with a URL being typed into the audit field." loading="eager" fetchpriority="high" decoding="async">
+          </picture>
+          <picture class="anim shot" data-anim data-shot="1" data-inactive aria-hidden="true">
+            <source type="image/webp" srcset="assets/gifs/readme-architect-poster.jpg" data-srcset="assets/gifs/readme-architect-720.webp">
+            <img src="assets/gifs/readme-architect-poster.jpg" data-poster="assets/gifs/readme-architect-poster.jpg" data-src="assets/gifs/readme-architect.gif" width="960" height="600" alt="Screen recording of the live Readme-Architect AI website scrolling through its landing page and feature cards." loading="lazy" decoding="async">
+          </picture>
+        </a>
+      </div>
+      <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+    </figure>
+  </div></div></div>
+  <div class="hero__row">
+    <p class="hero__cap" data-in><!-- OPTIONAL PHOTO: add assets/me.jpg (square, at least 400px), then delete the comment markers around the next line.
+      It shows as a 96px greyscale circle just above this caption; if the file is missing the tag removes itself.
+      <img class="me" src="assets/me.jpg" alt="" width="96" height="96" onerror="this.remove()"> --><span>Mohit Sehrawat</span><span class="sep" aria-hidden="true"> · </span><span>B.Tech CSE (AI)</span><span class="sep" aria-hidden="true"> · </span><span>Gurugram University</span><span class="sep" aria-hidden="true"> · </span><span>Class of 2027</span></p>
+    <div class="hero__cta" data-in>
+      <a class="btn btn--brand btn--lg" href="#work" data-magnetic>See the work <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
+      <a class="btn btn--line btn--lg" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener" data-magnetic>Résumé<span class="sr-only"> (PDF, opens in a new tab)</span></a>
+    </div>
+    <div class="hero__note" data-in>
+      <p><span class="dot" aria-hidden="true"></span><strong>Open to internships</strong><br>&amp; entry-level roles.</p>
+      <button class="rc" type="button" data-menu-open data-focus="#tldr" aria-controls="menu" aria-expanded="false"><span class="rc__t">The 30-second version</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>
+    </div>
+  </div>
+</div></section>
+
+<!-- print-only copy of the 30-second version (the menu itself is not printed) -->
+<section class="print-only wrap" aria-hidden="true">
+  <dl>
+    <div><dt>Looking for</dt><dd>Internship or entry-level role · AI / ML, automation, full-stack</dd></div>
+    <div><dt>Studying</dt><dd>B.Tech CSE (AI), Gurugram University · class of 2027</dd></div>
+    <div><dt>Now</dt><dd>Head of Data Collection, Training &amp; Placement Office · since Mar 2026</dd></div>
+    <div><dt>Before</dt><dd>Junior Tester intern, Rational Go · Jun–Sep 2025</dd></div>
+    <div><dt>Built</dt><dd>Readme-Architect AI (live) · AccessLens · AI-Attendance · all code on GitHub</dd></div>
+    <div><dt>Hackathons</dt><dd>5+ national-level, 24–36&nbsp;h builds</dd></div>
+    <div><dt>Contact</dt><dd>m29247396@gmail.com · github.com/mohit-sehrawat1708 · linkedin.com/in/mohit-sehrawat-67082a345</dd></div>
+  </dl>
+</section>
+
+<!-- ==================== STATUS STRIP ==================== -->
+<section class="strip marquee" role="region" aria-label="Status">
+  <div class="marquee__track">
+    <div class="marquee__group">
+      <span class="it">Open to <span class="s">internships</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">Entry-level <span class="s">roles</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">AI / <span class="s">ml</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">Full-stack <span class="s">web</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">Data &amp; <span class="s">automation</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">Class of <span class="s">2027</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+      <span class="it">Gurugram, <span class="s">india</span></span><svg class="ast" aria-hidden="true"><use href="#i-ast"/></svg>
+    </div><div class="marquee__group" aria-hidden="true">
+      <span class="it">Open to <span class="s">internships</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">Entry-level <span class="s">roles</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">AI / <span class="s">ml</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">Full-stack <span class="s">web</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">Data &amp; <span class="s">automation</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">Class of <span class="s">2027</span></span><svg class="ast"><use href="#i-ast"/></svg>
+      <span class="it">Gurugram, <span class="s">india</span></span><svg class="ast"><use href="#i-ast"/></svg>
+    </div>
+  </div>
+  <button class="pz pz--strip" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+</section>
+
+<!-- ==================== ABOUT ==================== -->
+<section class="sec about" id="about" aria-labelledby="about-title"><div class="wrap">
+  <p class="k rv">01 — The short version</p>
+  <h2 class="sr-only" id="about-title">About</h2>
+  <p class="statement" data-fill>I'm Mohit Sehrawat, a CSE (AI) student in Gurugram who builds <span class="hl">AI-powered tools</span> <span class="ig" aria-hidden="true" style="background-image:url(assets/gifs/pill-gemini-poster.png)"><picture class="anim" data-anim><source type="image/webp" srcset="assets/gifs/pill-gemini-poster.png" data-srcset="assets/gifs/pill-gemini.webp"><img src="assets/gifs/pill-gemini-poster.png" data-poster="assets/gifs/pill-gemini-poster.png" data-src="assets/gifs/pill-gemini.gif" width="240" height="104" alt="" loading="lazy" decoding="async"></picture></span> <span class="s">and ships them as real, working apps.</span> I lead the team behind a <span class="hl">300+ company placement database</span> <span class="ig" aria-hidden="true" style="background-image:url(assets/gifs/pill-pipeline-poster.png)"><picture class="anim" data-anim><source type="image/webp" srcset="assets/gifs/pill-pipeline-poster.png" data-srcset="assets/gifs/pill-pipeline.webp"><img src="assets/gifs/pill-pipeline-poster.png" data-poster="assets/gifs/pill-pipeline-poster.png" data-src="assets/gifs/pill-pipeline.gif" width="240" height="104" alt="" loading="lazy" decoding="async"></picture></span>, I've tested web and mobile products before launch, and I build <span class="hl">accessibility audits</span> <span class="ig" aria-hidden="true" style="background-image:url(assets/gifs/pill-a11y-poster.png)"><picture class="anim" data-anim><source type="image/webp" srcset="assets/gifs/pill-a11y-poster.png" data-srcset="assets/gifs/pill-a11y.webp"><img src="assets/gifs/pill-a11y-poster.png" data-poster="assets/gifs/pill-a11y-poster.png" data-src="assets/gifs/pill-a11y.gif" width="240" height="104" alt="" loading="lazy" decoding="async"></picture></span> that say exactly what to fix. <span class="s">Next: an internship or entry-level role.</span></p>
+  <div class="facts-wrap">
+    <span class="facts__rule" aria-hidden="true"></span>
+    <dl class="facts">
+      <div class="fact rv" style="--i:0"><dt>National-level hackathons, each a 24–36 hour build <a class="rc" href="#hackathons"><span class="rc__t">See them</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></dt><dd><span class="num">5+</span><span class="s">hackathons</span></dd></div>
+      <div class="fact rv" style="--i:1"><dt>Company and recruiter profiles in the placement database my team maintains <a class="rc" href="#exp-tpo"><span class="rc__t">TPO role</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></dt><dd><span aria-hidden="true"><span class="num"><span data-count="300">300</span>+</span><span class="s">profiles</span></span><span class="sr-only">300+ company and recruiter profiles</span></dd></div>
+      <div class="fact rv" style="--i:2"><dt>Manual data-entry time saved by the pipelines I automated <a class="rc" href="#exp-tpo"><span class="rc__t">How</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></dt><dd><span aria-hidden="true"><span class="num">~<span data-count="40">40</span>%</span><span class="s">saved</span></span><span class="sr-only">About 40% less manual data-entry time</span></dd></div>
+      <div class="fact rv" style="--i:3"><dt>Projects with public code on GitHub <a class="rc" href="#work"><span class="rc__t">Open</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></dt><dd><span class="num">3</span><span class="s">projects</span></dd></div>
+    </dl>
+  </div>
+  <a class="rc about__cv rv" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener"><span class="rc__t">The long version — résumé (PDF)</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
+</div></section>
+
+<!-- ==================== WORK ==================== -->
+<section class="sec work" id="work" aria-labelledby="work-title"><div class="wrap">
+  <div class="shead">
+    <div><p class="k">02 — Selected work</p><h2 class="pair" id="work-title" data-rise><span class="m"><span class="g">Proof of</span></span><span class="m"><span class="s">work</span></span></h2></div>
+    <div class="shead__side rv"><p class="lead">Three projects. All of the code is public.</p><a class="rc" href="https://github.com/mohit-sehrawat1708" target="_blank" rel="noopener"><span class="rc__t">GitHub</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></div>
+  </div>
+
+  <ol class="idx" data-hover-preview>
+    <li class="idx__row">
+      <a class="idx__link" href="#work-01" data-preview="assets/gifs/readme-architect-720.webp" data-preview-poster="assets/gifs/readme-architect-poster.jpg" data-preview-size="land"><span class="idx__n">01</span><span class="idx__name"><span class="g">Readme Architect</span> <span class="s">ai readme generator</span></span><span class="idx__stack">Next.js 15 · Gemini</span></a>
+      <span class="idx__rc"><a class="rc" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener" aria-label="Readme-Architect AI live site (opens in a new tab)"><span class="rc__t">Live</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a><a class="rc" href="https://github.com/mohit-sehrawat1708/Readme-Architect-AI" target="_blank" rel="noopener" aria-label="Readme-Architect AI code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></span>
+    </li>
+    <li class="idx__row">
+      <a class="idx__link" href="#work-02" data-preview="assets/gifs/accesslens.webp" data-preview-poster="assets/gifs/accesslens-poster.jpg" data-preview-size="land"><span class="idx__n">02</span><span class="idx__name"><span class="g">AccessLens</span> <span class="s">accessibility auditor</span></span><span class="idx__stack">JavaScript · Node</span></a>
+      <!-- When AccessLens is redeployed, add its live URL here -->
+      <span class="idx__rc"><a class="rc" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" aria-label="AccessLens code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></span>
+    </li>
+    <li class="idx__row">
+      <a class="idx__link" href="#work-03" data-preview="assets/gifs/attendance-phone.webp" data-preview-poster="assets/gifs/attendance-phone-poster.jpg" data-preview-size="tall"><span class="idx__n">03</span><span class="idx__name"><span class="g">AI-Attendance</span> <span class="s">timetable → one-tap attendance</span></span><span class="idx__stack">Python · TypeScript · Gemini</span></a>
+      <span class="idx__rc"><a class="rc" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener" aria-label="AI-Attendance code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></span>
+    </li>
+  </ol>
+
+  <div class="stack">
+    <!-- Role on this project: confirm wording with Mohit (repo is a fork of Deepender25/Readme-Architect-AI) -->
+    <article class="stack__card wc wc--01" id="work-01" style="--i:0" aria-labelledby="wc-01-t">
+      <div class="wc-meta">
+        <div class="wc-top"><span class="wc-n">01 / 03</span><span class="chip chip--live">Live</span><span class="chip">AI · Dev tools</span></div>
+        <h3 class="wc-title" id="wc-01-t">Readme Architect</h3>
+        <p class="wc-sub">turns any GitHub repo into a clean README</p>
+        <p class="wc-lead">Paste a GitHub repo URL and get a structured, professional README, with a live markdown preview and one-click copy or download.</p>
+        <ul class="wc-bullets">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Google Gemini, called through Next.js API routes and Python serverless functions</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Live markdown preview while the README is generated</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>One-click copy or download</span></li>
+        </ul>
+        <ul class="wc-stack" aria-label="Stack"><li class="chip">Next.js 15</li><li class="chip">TypeScript</li><li class="chip">Tailwind CSS</li><li class="chip">Gemini API</li><li class="chip">Python</li><li class="chip">Framer Motion</li><li class="chip">Radix UI</li></ul>
+        <div class="wc-btns">
+          <a class="btn btn--white" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener">Open live <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+          <a class="btn btn--white-line" href="https://github.com/mohit-sehrawat1708/Readme-Architect-AI" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+      <div class="wc-media" data-clip data-allow-overflow>
+        <a class="wc-media__link" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener" data-cursor="OPEN ↗" aria-label="Open Readme-Architect AI, live site (opens in a new tab)">
+          <div class="dev-pos dev-pos--browser"><div class="device__tilt" data-tilt="8"><figure class="device device--browser">
+            <div class="bbar"><i></i><i></i><i></i><span class="url">readmearchitect.vercel.app</span></div>
+            <div class="screen" data-bg="assets/gifs/readme-architect-poster.jpg"><picture class="anim" data-anim>
+              <source type="image/webp" srcset="assets/gifs/readme-architect-poster.jpg" data-srcset="assets/gifs/readme-architect-720.webp">
+              <img src="assets/gifs/readme-architect-poster.jpg" data-poster="assets/gifs/readme-architect-poster.jpg" data-src="assets/gifs/readme-architect.gif" width="960" height="600" alt="Screen recording of the live Readme-Architect AI website scrolling through its landing page and feature cards." loading="lazy" decoding="async">
+            </picture></div>
+          </figure></div></div>
+          <span class="wc-go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-up-right"/></svg></span><span class="wc-cap">Real screen recording · live site</span>
+        </a>
+        <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+      </div>
+      <span class="stack__shade" aria-hidden="true"></span>
+    </article>
+
+    <article class="stack__card wc wc--02" id="work-02" style="--i:1" aria-labelledby="wc-02-t">
+      <div class="wc-meta">
+        <div class="wc-top"><span class="wc-n">02 / 03</span><span class="chip chip--os">Open source</span><span class="chip">Accessibility</span></div>
+        <h3 class="wc-title" id="wc-02-t">AccessLens</h3>
+        <p class="wc-sub">an accessibility audit for any URL</p>
+        <p class="wc-lead">Paste a URL and get a scored 0–100 accessibility report. Every issue comes with a severity, the WCAG criterion it breaks and a concrete fix.</p>
+        <ul class="wc-bullets">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Colour contrast that handles alpha compositing, CSS variables, gradients and @media rules, and computes a passing colour</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Missing or poor alt text, keyboard-navigation problems, structure and semantics</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Runs locally: nothing stored, no external services</span></li>
+        </ul>
+        <ul class="wc-stack" aria-label="Stack"><li class="chip">JavaScript</li><li class="chip">Node.js</li><li class="chip">HTML</li><li class="chip">CSS</li></ul>
+        <div class="wc-btns">
+          <!-- When AccessLens is redeployed, add its live URL here -->
+          <a class="btn btn--white" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+      </div>
+      <div class="wc-media" data-clip data-allow-overflow>
+        <!-- When AccessLens is redeployed, add its live URL here -->
+        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="AccessLens source code on GitHub (opens in a new tab)">
+          <div class="dev-pos dev-pos--browser"><div class="device__tilt" data-tilt="8"><figure class="device device--browser device--paper">
+            <div class="bbar"><i></i><i></i><i></i><span class="url">localhost:3000 · accesslens</span></div>
+            <div class="screen" data-bg="assets/gifs/accesslens-poster.jpg"><picture class="anim" data-anim>
+              <source type="image/webp" srcset="assets/gifs/accesslens-poster.jpg" data-srcset="assets/gifs/accesslens.webp">
+              <img src="assets/gifs/accesslens-poster.jpg" data-poster="assets/gifs/accesslens-poster.jpg" data-src="assets/gifs/accesslens.gif" width="960" height="600" alt="Screen recording of AccessLens, running locally from its repository, with a URL being typed into the audit field." loading="lazy" decoding="async">
+            </picture></div>
+          </figure></div></div>
+          <span class="wc-go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-up-right"/></svg></span><span class="wc-cap">Real screen recording · local build</span>
+        </a>
+        <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+      </div>
+      <span class="stack__shade" aria-hidden="true"></span>
+    </article>
+
+    <article class="stack__card wc wc--03" id="work-03" style="--i:2" aria-labelledby="wc-03-t">
+      <div class="wc-meta">
+        <div class="wc-top"><span class="wc-n">03 / 03</span><span class="chip">Code only</span><span class="chip">AI · Installable</span></div>
+        <h3 class="wc-title" id="wc-03-t">AI-Attendance</h3>
+        <p class="wc-sub">your timetable, one tap per class</p>
+        <p class="wc-lead">Upload your timetable file and AI parsing pulls out every class, so you can mark each session Attended, Absent or Cancelled with one tap.</p>
+        <ul class="wc-bullets">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>AI document parsing replaces manual timetable entry</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Adapts to the different file formats departments use</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Installable on your device</span></li>
+        </ul>
+        <ul class="wc-stack" aria-label="Stack"><li class="chip">Python</li><li class="chip">TypeScript</li><li class="chip">JavaScript</li><li class="chip">Gemini (AI Studio)</li></ul>
+        <div class="wc-btns">
+          <a class="btn btn--ink" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener">Code <svg class="ic ic--out" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+        </div>
+        <p class="wc-note">No live demo. The phone screen is an illustration of the flow, not a recording.</p>
+      </div>
+      <div class="wc-media" data-clip data-allow-overflow>
+        <a class="wc-media__link" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener" data-cursor="CODE ↗" aria-label="AI-Attendance source code on GitHub (opens in a new tab)">
+          <div class="dev-pos dev-pos--phone"><div class="device__tilt" data-tilt="8"><figure class="device device--phone">
+            <div class="frame"><div class="scr" data-bg="assets/gifs/attendance-phone-poster.jpg"><picture class="anim" data-anim>
+              <source type="image/webp" srcset="assets/gifs/attendance-phone-poster.jpg" data-srcset="assets/gifs/attendance-phone.webp">
+              <img src="assets/gifs/attendance-phone-poster.jpg" data-poster="assets/gifs/attendance-phone-poster.jpg" data-src="assets/gifs/attendance-phone.gif" width="360" height="760" alt="Illustrative animation of the AI-Attendance flow: upload a timetable, AI parses it into today's classes, and each class is marked Attended, Absent or Cancelled with one tap." loading="lazy" decoding="async">
+            </picture></div></div>
+          </figure></div></div>
+          <span class="wc-go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-up-right"/></svg></span><span class="wc-corner">Illustrative UI</span>
+        </a>
+        <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+      </div>
+      <span class="stack__shade" aria-hidden="true"></span>
+    </article>
+  </div>
+</div></section>
+
+<!-- ==================== TOOLKIT BAND ==================== -->
+<section class="band" id="toolkit" aria-labelledby="toolkit-title"><div class="wrap">
+  <div class="band__head">
+    <div><p class="k k--on-brand">03 — Toolkit</p><h2 class="pair pair--stack band__pair" id="toolkit-title" data-rise><span class="m"><span class="g">What I</span></span><span class="m"><span class="s">build with</span></span></h2></div>
+    <div class="band__side rv"><p>From scraping pipelines to Gemini-powered apps. Pills marked <span aria-hidden="true">●</span><span class="sr-only">with a dot</span> are used in the work on this page.</p><a class="btn btn--white" href="#skills" data-magnetic>Full list <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></div>
+  </div>
+  <ul class="pile" data-pile aria-label="Core toolkit">
+    <li><a class="tag" href="#work-01" draggable="false"><span class="dot" aria-hidden="true"></span>Python</a></li>
+    <li><a class="tag" href="#work-01" draggable="false"><span class="dot" aria-hidden="true"></span>TypeScript</a></li>
+    <li><a class="tag" href="#work-01" draggable="false"><span class="dot" aria-hidden="true"></span>Next.js 15</a></li>
+    <li><a class="tag" href="#work-01" draggable="false"><span class="dot" aria-hidden="true"></span>Gemini API</a></li>
+    <li><a class="tag" href="#work-01" draggable="false"><span class="dot" aria-hidden="true"></span>Tailwind CSS</a></li>
+    <li><a class="tag" href="#work-02" draggable="false"><span class="dot" aria-hidden="true"></span>JavaScript</a></li>
+    <li><a class="tag" href="#work-02" draggable="false"><span class="dot" aria-hidden="true"></span>Node.js</a></li>
+    <li><a class="tag" href="#exp-tpo" draggable="false"><span class="dot" aria-hidden="true"></span>Pandas</a></li>
+    <li><a class="tag" href="#exp-tpo" draggable="false"><span class="dot" aria-hidden="true"></span>Selenium</a></li>
+    <li><a class="tag" href="#exp-tpo" draggable="false"><span class="dot" aria-hidden="true"></span>BeautifulSoup</a></li>
+    <li><span class="tag">TensorFlow</span></li>
+    <li><span class="tag">scikit-learn</span></li>
+    <li><span class="tag">OpenCLIP</span></li>
+    <li><span class="tag">SQL / MySQL</span></li>
+  </ul>
+  <div class="pile__foot"><p class="pile__hint" aria-hidden="true">(go on, grab one)</p><button class="rc rc--on-brand" type="button" data-drop-again><span class="rc__t">Drop again</span> <svg class="ic" aria-hidden="true"><use href="#i-rotate"/></svg></button></div>
+  <div class="skills" id="skills">
+    <h3 class="pair pair--sm"><span class="g">The full</span><span class="s">list</span></h3>
+    <div class="skills__grid">
+      <dl class="rv" style="--i:0"><dt>Languages</dt><dd>Python, C++, Swift</dd></dl>
+      <dl class="rv" style="--i:1"><dt>Web</dt><dd>HTML, CSS, JavaScript, TypeScript, Next.js 15, Tailwind CSS</dd></dl>
+      <dl class="rv" style="--i:2"><dt>AI / ML</dt><dd>TensorFlow, Google Gemini API, OpenCLIP, GLM, scikit-learn</dd></dl>
+      <dl class="rv" style="--i:3"><dt>Data</dt><dd>Pandas, BeautifulSoup, Selenium, Excel</dd></dl>
+      <dl class="rv" style="--i:0"><dt>Databases &amp; VCS</dt><dd>SQL, MySQL, Git, GitHub</dd></dl>
+      <dl class="rv" style="--i:1"><dt>Tools</dt><dd>Android Studio, VS Code, Postman, Framer Motion, Radix UI, MS Office</dd></dl>
+    </div>
+    <p class="skills__also">Also: communication, attention to detail, team leadership, problem solving.</p>
+  </div>
+</div></section>
+
+<!-- ==================== EXPERIENCE ==================== -->
+<section class="sec experience" id="experience" aria-labelledby="exp-title"><div class="wrap">
+  <div class="shead">
+    <div><p class="k">04 — Experience</p><h2 class="pair" id="exp-title" data-rise><span class="m"><span class="g">Experience</span></span><span class="m"><span class="s">so far</span></span></h2></div>
+    <div class="shead__side rv"><p class="lead">A campus leadership role, a product-testing internship, and the degree that ties them together.</p><a class="rc" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener"><span class="rc__t">Full résumé (PDF)</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></div>
+  </div>
+  <div class="plans">
+    <div class="plan-cell plan-cell--tpo rv" style="--i:1">
+      <article class="plan plan--now" id="exp-tpo" aria-labelledby="exp-tpo-t">
+        <span class="plan__flag">Now</span>
+        <div class="plan__top"><h3 class="plan__role" id="exp-tpo-t">Head of Data Collection</h3><span class="plan__when">Mar 2026 → Present</span></div>
+        <p class="plan__org">Training &amp; Placement Office, Gurugram University</p>
+        <div class="plan__media" data-bg="assets/gifs/terminal-pipeline-poster.jpg">
+          <picture class="anim" data-anim>
+            <source type="image/webp" srcset="assets/gifs/terminal-pipeline-poster.jpg" data-srcset="assets/gifs/terminal-pipeline.webp">
+            <img src="assets/gifs/terminal-pipeline-poster.jpg" data-poster="assets/gifs/terminal-pipeline-poster.jpg" data-src="assets/gifs/terminal-pipeline.gif" width="640" height="400" alt="Illustration of the placement-data pipeline: scrape with BeautifulSoup and Selenium, clean with Pandas, validate against the recruiter schema, load 300+ company profiles." loading="lazy" decoding="async">
+          </picture>
+          <span class="plan__tag">Illustrative</span>
+          <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+        </div>
+        <div class="plan__big"><b>300+<span class="s">profiles</span></b><span>company and recruiter records, scraped, cleaned and maintained</span></div>
+        <ul class="checks">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Lead a cross-functional team of 4–5</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Scrape with BeautifulSoup and Selenium, clean with Pandas</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Automated data pipelines cut manual data-entry time by ~40%</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Designed a standardised schema for recruiter records</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Weekly reports to TPO faculty on data health, recruiter engagement and drive readiness</span></li>
+        </ul>
+        <ul class="plan__chips" aria-label="Tools"><li class="chip">Python</li><li class="chip">Pandas</li><li class="chip">Selenium</li><li class="chip">BeautifulSoup</li></ul>
+      </article>
+    </div>
+    <div class="plan-cell plan-cell--rg rv" style="--i:0">
+      <article class="plan" aria-labelledby="exp-rg-t">
+        <div class="plan__top"><h3 class="plan__role" id="exp-rg-t">Junior Tester</h3><span class="plan__when">Internship · Jun → Sep 2025</span></div>
+        <p class="plan__org">Rational Go</p>
+        <div class="plan__big"><b>Web +<span class="s">mobile</span></b><span>systematic pre-launch testing on both</span></div>
+        <ul class="checks">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Caught functional bugs, UI/UX inconsistencies and edge-case failures before launch</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Documented test cases and defect reports that helped reduce post-launch critical issues</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Validated fixes and rollouts against acceptance criteria in sprint reviews with designers and developers</span></li>
+        </ul>
+        <ul class="plan__chips" aria-label="Skills"><li class="chip">QA</li><li class="chip">Test cases</li><li class="chip">Sprint reviews</li></ul>
+      </article>
+    </div>
+    <div class="plan-cell plan-cell--edu rv" style="--i:2">
+      <article class="plan" aria-labelledby="exp-edu-t">
+        <div class="plan__top"><h3 class="plan__role" id="exp-edu-t">B.Tech, CSE (AI)</h3><span class="plan__when">Expected 2027</span></div>
+        <p class="plan__org">Gurugram University</p>
+        <div class="plan__big"><b><span aria-hidden="true">2027<span class="s">batch</span></span><span class="sr-only">Class of 2027</span></b><span>Computer Science &amp; Engineering, AI specialisation</span></div>
+        <ul class="checks">
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Class XII, Science (PCM + CS), CBSE, 2022: 84%</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Class X, CBSE, 2020: 79%</span></li>
+          <li><svg class="ic" aria-hidden="true"><use href="#i-check"/></svg><span>Both at Prince Academy of Higher Education</span></li>
+        </ul>
+      </article>
+    </div>
+  </div>
+</div></section>
+
+<!-- ==================== HACKATHONS ==================== -->
+<div class="hack-wrap" id="hackathons">
+ <section class="hack" aria-labelledby="hack-title">
+  <div class="hack__track" data-allow-overflow>
+    <div class="panel panel--intro">
+      <p class="k">05 — Hackathons</p>
+      <h2 class="pair" id="hack-title" data-rise><span class="m"><span class="g">Built in</span></span><span class="m"><span class="s">24–36 hours</span></span></h2>
+      <p class="lead">5+ national-level hackathons, each one a 24 to 36 hour window to build a working product and pitch it.</p>
+      <div class="clock-wrap">
+        <div class="clock" data-bg="assets/gifs/hackathon-clock-poster.jpg" aria-hidden="true">
+          <picture class="anim" data-anim>
+            <source type="image/webp" srcset="assets/gifs/hackathon-clock-poster.jpg" data-srcset="assets/gifs/hackathon-clock.webp">
+            <img src="assets/gifs/hackathon-clock-poster.jpg" data-poster="assets/gifs/hackathon-clock-poster.jpg" data-src="assets/gifs/hackathon-clock.gif" width="480" height="480" alt="" loading="lazy" decoding="async">
+          </picture>
+        </div>
+        <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
+      </div>
+      <p class="hack__hint" aria-hidden="true"><span class="h-pin">Scroll</span><span class="h-swipe">Swipe</span> <svg class="ic"><use href="#i-arrow-right"/></svg></p>
+    </div>
+    <!-- the passes: their own swipe row on phones / reduced motion; part of the pinned track on desktop (display:contents) -->
+    <div class="hack__passes" role="region" aria-label="Hackathon passes" tabindex="0">
+      <article class="pass" style="--r:-2.5" aria-labelledby="pass-1"><div class="pass__in" data-tilt="6">
+        <div class="pass__top"><div class="pass__head"><span>Pass 01 / 05</span><span>National-level</span></div><span class="pass__num" aria-hidden="true">01</span><h3 class="pass__name" id="pass-1">HackUtsav 1.0</h3><p class="pass__host"></p></div>
+        <div class="pass__stub"><span>24–36 H BUILD</span><div class="barcode" aria-hidden="true"></div></div>
+      </div></article>
+      <article class="pass" style="--r:2.5" aria-labelledby="pass-2"><div class="pass__in" data-tilt="6">
+        <div class="pass__top"><div class="pass__head"><span>Pass 02 / 05</span><span>National-level</span></div><span class="pass__num" aria-hidden="true">02</span><h3 class="pass__name" id="pass-2">Hacked 3.0</h3><p class="pass__host">BML Munjal University</p></div>
+        <div class="pass__stub"><span>24–36 H BUILD</span><div class="barcode" aria-hidden="true"></div></div>
+      </div></article>
+      <article class="pass" style="--r:-2.5" aria-labelledby="pass-3"><div class="pass__in" data-tilt="6">
+        <div class="pass__top"><div class="pass__head"><span>Pass 03 / 05</span><span>National-level</span></div><span class="pass__num" aria-hidden="true">03</span><h3 class="pass__name" id="pass-3">Hacked 4.0</h3><p class="pass__host">BML Munjal University</p></div>
+        <div class="pass__stub"><span>24–36 H BUILD</span><div class="barcode" aria-hidden="true"></div></div>
+      </div></article>
+      <article class="pass" style="--r:2.5" aria-labelledby="pass-4"><div class="pass__in" data-tilt="6">
+        <div class="pass__top"><div class="pass__head"><span>Pass 04 / 05</span><span>National-level</span></div><span class="pass__num" aria-hidden="true">04</span><h3 class="pass__name" id="pass-4">Hackverse</h3><p class="pass__host">IILM University</p></div>
+        <div class="pass__stub"><span>24–36 H BUILD</span><div class="barcode" aria-hidden="true"></div></div>
+      </div></article>
+      <article class="pass" style="--r:-2.5" aria-labelledby="pass-5"><div class="pass__in" data-tilt="6">
+        <div class="pass__top"><div class="pass__head"><span>Pass 05 / 05</span><span>National-level</span></div><span class="pass__num" aria-hidden="true">05</span><h3 class="pass__name" id="pass-5">Code for Bharat</h3><p class="pass__host"></p></div>
+        <div class="pass__stub"><span>24–36 H BUILD</span><div class="barcode" aria-hidden="true"></div></div>
+      </div></article>
+    </div>
+    <div class="panel panel--outro">
+      <p>Project write-ups and dev notes live on <em>LinkedIn</em>.</p>
+      <a class="rc" href="https://www.linkedin.com/in/mohit-sehrawat-67082a345/" target="_blank" rel="noopener"><span class="rc__t">LinkedIn</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+    </div>
+  </div>
+ </section>
+</div>
+
+<!-- ==================== ON THE SIDE ==================== -->
+<section class="sec side" id="side" aria-labelledby="side-title"><div class="wrap">
+  <div class="shead"><div><p class="k">Also — On the side</p><h2 class="pair" id="side-title" data-rise><span class="m"><span class="g">On the</span></span><span class="m"><span class="s">side</span></span></h2></div></div>
+  <div class="quotes">
+    <figure class="quote big rv rv-scale" style="--i:0">
+      <div>
+        <p class="quote__label">In my own words</p>
+        <svg class="ic braces" aria-hidden="true"><use href="#i-braces"/></svg>
+        <blockquote>Passionate about solving real-world problems through machine learning, automation and full-stack development.</blockquote>
+      </div>
+      <figcaption class="quote__foot"><span>— from my résumé</span><a class="rc" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener"><span class="rc__t">Read the résumé</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-down"/></svg></a></figcaption>
+    </figure>
+    <article class="quote rv rv-scale" style="--i:1">
+      <div><p class="quote__label">Peer mentor</p><h3>Coding club mentor</h3></div>
+      <p>In my university's coding club I help juniors with Python fundamentals and their first open-source contributions.</p>
+    </article>
+    <article class="quote rv rv-scale" style="--i:2">
+      <div><p class="quote__label">Open source &amp; write-ups</p><h3>Building in public</h3></div>
+      <p>Active open-source contributor on GitHub. I share project write-ups, dev insights and tech discoveries on LinkedIn.</p>
+      <div class="quote__rcs"><a class="rc" href="https://github.com/mohit-sehrawat1708" target="_blank" rel="noopener"><span class="rc__t">GitHub</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a><a class="rc" href="https://www.linkedin.com/in/mohit-sehrawat-67082a345/" target="_blank" rel="noopener"><span class="rc__t">LinkedIn</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></div>
+    </article>
+  </div>
+</div></section>
+
+</main>
+
+<!-- ==================== CONTACT / FOOTER ==================== -->
+<footer id="contact" class="site-footer">
+  <div class="wrap cta">
+    <p class="k k--dark"><span class="dot" aria-hidden="true"></span>Open to internships &amp; entry-level roles</p>
+    <h2 class="cta__pair"><span class="g" data-footer-title>Let's build</span><span class="m"><span class="s">together</span></span></h2>
+    <p class="cta__lead">I'm looking for an internship or entry-level role in AI / ML, automation or full-stack development. Email is the fastest way to reach me.</p>
+    <div class="cta__actions">
+      <a class="btn btn--brand btn--lg" href="mailto:m29247396@gmail.com?subject=Hi%20Mohit" data-magnetic>Email me <svg class="ic ic--go" aria-hidden="true"><use href="#i-arrow-right"/></svg></a>
+      <button class="btn btn--white-line btn--lg" type="button" data-copy="m29247396@gmail.com" data-cursor="COPY" data-magnetic>Copy email <svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg></button>
+      <a class="btn btn--white-line btn--lg" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener" data-magnetic>Résumé (PDF) <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sr-only"> (opens in a new tab)</span></a>
+    </div>
+    <div class="cta__links">
+      <a class="rc" href="https://github.com/mohit-sehrawat1708" target="_blank" rel="noopener"><span class="rc__t">GitHub</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="rc" href="https://www.linkedin.com/in/mohit-sehrawat-67082a345/" target="_blank" rel="noopener"><span class="rc__t">LinkedIn</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a>
+      <a class="rc rc--plain" href="mailto:m29247396@gmail.com"><span class="rc__t">m29247396@gmail.com</span></a>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="foot">
+      <div class="foot__brand"><a class="logo" href="#top" aria-label="Mohit Sehrawat, back to top">MOHIT<span>.</span></a><span class="s">Let's build together.</span><p>Gurugram, Haryana, India</p></div>
+      <nav aria-label="Pages"><h3>Pages</h3><ul class="foot__pages"><li><a href="#about">About</a></li><li><a href="#work">Work</a></li><li><a href="#toolkit">Toolkit</a></li><li><a href="#experience">Experience</a></li><li><a href="#hackathons">Hackathons</a></li><li><a href="#contact">Contact</a></li></ul></nav>
+      <div><h3>Projects</h3><ul>
+        <li class="foot__proj"><b>Readme-Architect AI</b><a class="rc" href="https://readmearchitect.vercel.app" target="_blank" rel="noopener" aria-label="Readme-Architect AI live site (opens in a new tab)"><span class="rc__t">Live</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a><a class="rc" href="https://github.com/mohit-sehrawat1708/Readme-Architect-AI" target="_blank" rel="noopener" aria-label="Readme-Architect AI code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></li>
+        <!-- When AccessLens is redeployed, add its live URL here -->
+        <li class="foot__proj"><b>AccessLens</b><a class="rc" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" aria-label="AccessLens code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></li>
+        <li class="foot__proj"><b>AI-Attendance</b><a class="rc" href="https://github.com/mohit-sehrawat1708/AI-Attendance" target="_blank" rel="noopener" aria-label="AI-Attendance code on GitHub (opens in a new tab)"><span class="rc__t">Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg></a></li>
+      </ul></div>
+      <div><h3>Elsewhere</h3><ul>
+        <li><a href="https://github.com/mohit-sehrawat1708" target="_blank" rel="noopener">GitHub <svg class="ic ic--sm" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="https://www.linkedin.com/in/mohit-sehrawat-67082a345/" target="_blank" rel="noopener">LinkedIn <svg class="ic ic--sm" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+        <li><a href="mailto:m29247396@gmail.com">Email</a></li>
+        <li><a href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener">Résumé (PDF) <svg class="ic ic--sm" aria-hidden="true"><use href="#i-arrow-down"/></svg><span class="sr-only"> (opens in a new tab)</span></a></li>
+      </ul></div>
+    </div>
+    <div class="base">
+      <span>© 2026 Mohit Sehrawat</span>
+      <span class="mono ftime">Local time <span data-time>--:--</span> IST</span>
+      <span>Built with HTML, CSS &amp; JS · GSAP · Lenis · Matter.js</span>
+      <button class="to-top" type="button" data-to-top>Back to top <svg class="ic" aria-hidden="true"><use href="#i-arrow-up"/></svg></button>
+    </div>
+  </div>
+</footer>
+
+<!-- ==================== MENU (dialog) ==================== -->
+<nav class="menu" id="menu" role="dialog" aria-modal="true" aria-label="Menu" data-lenis-prevent>
+  <div class="wrap menu__top">
+    <a class="logo" href="#top" aria-label="Mohit Sehrawat, back to top" data-menu-link>MOHIT<span>.</span></a>
+    <button class="menu__close" type="button" data-menu-close>Close <i aria-hidden="true"><svg class="ic"><use href="#i-x"/></svg></i></button>
+  </div>
+  <div class="wrap menu__body">
+    <ol class="menu__links">
+      <li class="stag" style="--i:0"><a href="#about" data-menu-link><span class="n">01</span><span class="wg"><span class="w">About</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">the short version</span></a></li>
+      <li class="stag" style="--i:1"><a href="#work" data-menu-link><span class="n">02</span><span class="wg"><span class="w">Work</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">three projects, all code public</span></a></li>
+      <li class="stag" style="--i:2"><a href="#toolkit" data-menu-link><span class="n">03</span><span class="wg"><span class="w">Toolkit</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">what I build with</span></a></li>
+      <li class="stag" style="--i:3"><a href="#experience" data-menu-link><span class="n">04</span><span class="wg"><span class="w">Experience</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">so far</span></a></li>
+      <li class="stag" style="--i:4"><a href="#hackathons" data-menu-link><span class="n">05</span><span class="wg"><span class="w">Hackathons</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">24–36 hour builds</span></a></li>
+      <li class="stag" style="--i:5"><a href="#contact" data-menu-link><span class="n">06</span><span class="wg"><span class="w">Contact</span><span class="go" aria-hidden="true"><svg class="ic"><use href="#i-arrow-right"/></svg></span></span><span class="tail">let's talk</span></a></li>
+    </ol>
+    <section class="tldr stag" id="tldr" tabindex="-1" style="--i:6" aria-labelledby="tldr-t">
+      <h2 class="pair pair--sm" id="tldr-t"><span class="g">The 30-second</span><span class="s">version</span></h2>
+      <dl>
+        <div><dt>Looking for</dt><dd>Internship or entry-level role · AI / ML, automation, full-stack</dd></div>
+        <div><dt>Studying</dt><dd>B.Tech CSE (AI), Gurugram University · class of 2027</dd></div>
+        <div><dt>Now</dt><dd>Head of Data Collection, Training &amp; Placement Office · since Mar 2026</dd></div>
+        <div><dt>Before</dt><dd>Junior Tester intern, Rational Go · Jun–Sep 2025</dd></div>
+        <div><dt>Built</dt><dd>Readme-Architect AI (live) · AccessLens · AI-Attendance · all code on GitHub</dd></div>
+        <div><dt>Hackathons</dt><dd>5+ national-level, 24–36&nbsp;h builds</dd></div>
+        <div><dt>Contact</dt><dd><a href="mailto:m29247396@gmail.com">m29247396@gmail.com</a><button class="copy-mini" type="button" data-copy="m29247396@gmail.com"><svg class="ic" aria-hidden="true"><use href="#i-copy"/></svg>Copy</button> · <a href="https://github.com/mohit-sehrawat1708" target="_blank" rel="noopener">GitHub<span class="sr-only"> (opens in a new tab)</span></a> · <a href="https://www.linkedin.com/in/mohit-sehrawat-67082a345/" target="_blank" rel="noopener">LinkedIn<span class="sr-only"> (opens in a new tab)</span></a> · <a href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener"><strong>Résumé (PDF)</strong><span class="sr-only"> (opens in a new tab)</span></a></dd></div>
+      </dl>
+    </section>
+  </div>
+</nav>
+
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
+<div class="cursor" aria-hidden="true"><span class="cursor__dot"></span><span class="cursor__disc"><span class="cursor__label"></span></span></div>
+<div class="preview" aria-hidden="true"><img alt="" decoding="async"></div>
+<noscript><style>.menu-btn{display:none}</style></noscript>
+</body>
+</html>

@@ -1,0 +1,11 @@
+﻿# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+# Deploy tooling
+.vercel/
+.netlify/
+node_modules/
+*.log

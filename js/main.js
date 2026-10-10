@@ -72,63 +72,7 @@ const Media = { els:[], vis:new Map(), since:new Map(), paused:false, MAX:3, DWE
     this.els.forEach(p => this.set(p, on.includes(p)));
     clearTimeout(this.dt); this.dt = wait ? setTimeout(() => this.update(), wait + 20) : 0;
   },
-  toggle(){ this.paused = !this.paused; root.classList.toggle('is-paused', this.paused); syncPauseButtons(); this.update(); safe(() => Tabs.onPause()); }
-};
-
-/* ---------------- hero tabs (AccessLens / Readme-Architect) ---------------- */
-const Tabs = { cur:0, timer:0, due:0, remain:9000, started:false, stopped:false, visible:true, offT:0,
-  data:[
-    { href:'https://github.com/mohit-sehrawat1708/Audit_Your_Website', cursor:'CODE ↗', live:'Code', code:true, poster:'assets/gifs/accesslens-poster.jpg',
-      sr:'AccessLens source code on GitHub (opens in a new tab)', sr2:' (opens the AccessLens repository on GitHub in a new tab)' },
-    { href:'https://readmearchitect.vercel.app', cursor:'OPEN ↗', live:'Live', code:false, poster:'assets/gifs/readme-architect-poster.jpg',
-      sr:'Open Readme-Architect AI, live site (opens in a new tab)', sr2:' (opens readmearchitect.vercel.app in a new tab)' }
-  ],
-  init(){
-    const dev = this.dev = $('.hero-dev'); if (!dev) return;
-    this.tabs = $$('[role=tab]', dev); this.list = $('.tabs', dev); this.shots = $$('[data-shot]', dev);
-    this.screen = $('#hero-screen'); this.link = $('.screen__link', dev); this.live = $('[data-live]', dev);
-    this.tabs.forEach((t, k) => t.addEventListener('click', () => { this.stop(); if (k !== this.cur) this.select(k); }));
-    this.list.addEventListener('keydown', e => {
-      const n = this.tabs.length; let k = null;
-      if (e.key === 'ArrowRight') k = (this.cur + 1) % n; else if (e.key === 'ArrowLeft') k = (this.cur - 1 + n) % n;
-      else if (e.key === 'Home') k = 0; else if (e.key === 'End') k = n - 1;
-      if (k === null) return; e.preventDefault(); this.stop(); this.select(k); this.tabs[k].focus();
-    });
-    const hero = $('.hero');
-    if (hero && 'IntersectionObserver' in window) new IntersectionObserver(([e]) => { this.visible = e.isIntersecting; hero.classList.toggle('is-visible', e.isIntersecting); this.sync(); }).observe(hero);
-    else hero?.classList.add('is-visible');
-    document.addEventListener('visibilitychange', () => this.sync());
-    /* hold auto-advance while focus is inside the device */
-    dev.addEventListener('focusin', () => this.sync()); dev.addEventListener('focusout', () => setTimeout(() => this.sync(), 0));
-    if (mqRM.matches) dev.classList.add('no-autoadvance');
-  },
-  restartBar(){ this.list.classList.add('rs'); void this.list.offsetWidth; this.list.classList.remove('rs'); },
-  stop(){ if (!this.dev) return; this.stopped = true; this.dev.classList.add('no-autoadvance'); clearTimeout(this.timer); this.timer = 0; },
-  select(k){
-    const d = this.data[k], prev = this.cur; this.cur = k;
-    this.tabs.forEach((t, j) => { const on = j === k; t.setAttribute('aria-selected', String(on)); t.tabIndex = on ? 0 : -1; });
-    this.screen.setAttribute('aria-labelledby', this.tabs[k].id);
-    this.shots.forEach((s, j) => { s.classList.toggle('is-on', j === k); j === k ? s.removeAttribute('aria-hidden') : s.setAttribute('aria-hidden', 'true'); });
-    this.shots[k].removeAttribute('data-inactive');
-    clearTimeout(this.offT); /* the old shot keeps playing through the 400 ms crossfade, then returns to its poster */
-    this.offT = setTimeout(() => { this.shots.forEach((s, j) => { if (j !== this.cur) s.setAttribute('data-inactive', ''); }); Media.update(); }, prev === k ? 0 : 420);
-    this.link.href = d.href; this.link.dataset.cursor = d.cursor; $('[data-live-sr]', this.link).textContent = d.sr;
-    if (this.link.matches(':hover')) { const cl = $('.cursor__label'); if (cl) cl.textContent = d.cursor; }   /* auto-advance under a resting pointer */
-    this.live.href = d.href; this.live.classList.toggle('is-code', d.code); $('[data-live-t]', this.live).textContent = d.live; $('[data-live-sr2]', this.live).textContent = d.sr2;
-    this.screen.style.backgroundImage = `url(${d.poster})`;
-    Media.update(); this.restartBar();
-    this.remain = 9000; clearTimeout(this.timer); this.timer = 0; this.sync();
-  },
-  start(){ if (this.started || !this.dev) return; this.started = true; this.dev.classList.add('tabs-live'); this.restartBar(); this.remain = 9000; this.sync(); },
-  held(){ return !!this.dev && this.dev.contains(document.activeElement); },
-  can(){ return this.started && !this.stopped && this.visible && !Media.paused && !mqRM.matches && !document.hidden && !this.held(); },
-  sync(){
-    if (!this.dev) return;
-    this.dev.classList.toggle('is-held', this.started && !this.stopped && this.held());
-    if (this.can()) { if (!this.timer) { this.due = Date.now() + this.remain; this.timer = setTimeout(() => { this.timer = 0; this.select((this.cur + 1) % this.tabs.length); }, this.remain); } }
-    else if (this.timer) { clearTimeout(this.timer); this.timer = 0; this.remain = Math.max(0, this.due - Date.now()); }
-  },
-  onPause(){ if (!this.dev) return; if (!Media.paused) { this.remain = 9000; this.restartBar(); } this.sync(); }
+  toggle(){ this.paused = !this.paused; root.classList.toggle('is-paused', this.paused); syncPauseButtons(); this.update(); }
 };
 
 /* ---------------- physics pills (matter-js 0.20): record offline, play back, then hand off to a live engine ---------------- */
@@ -482,14 +426,6 @@ function initToTop(){
     $('#main')?.focus({ preventScroll:true });
   }));
 }
-/* optional images (the hero photo, assets/me.jpg): a missing file removes its tag. Not an inline onerror="": the site's
-   Content-Security-Policy blocks inline event handlers. The error may have fired before this deferred script ran, hence the check */
-function initOptionalImages(){
-  $$('img[data-optional]').forEach(img => {
-    if (img.complete && !img.naturalWidth) img.remove(); else img.addEventListener('error', () => img.remove(), { once:true });
-  });
-}
-
 /* ---------------- GSAP systems ---------------- */
 function initLenis(){
   /* no auto-refresh on window 'load': the one refresh happens after fonts + buildScenes (images all reserve their space) */
@@ -652,27 +588,27 @@ const splitHero = () => heroSplit || (heroSplit = srSplit($('[data-hero-word]'),
 /* ---------------- hero entrance (H0) ---------------- */
 function heroEntrance(){
   const split = splitHero();
-  const l1 = $$('.hero__l1 .m > span'), rest = $$('.hero__cap, .hero__cta, .hero__note');
+  const l1 = $$('.hero__l1 .m > span'), rest = $$('.hero__cap, .hero__note'), chat = $('.hero__chat');
   gsap.set(l1, { yPercent:120 });
   gsap.set(split.chars, { yPercent:115 });
-  /* the device only moves, it never fades: it is the page's largest image, and an invisible image does not count as shown (LCP).
-     CSS draws the same start pose from the first paint (.is-pre .hd-in), so nothing jumps */
-  gsap.set('.hd-in', { y:120, scale:.92, rotation:-9 });
+  /* the photo only moves, it never fades: it is the page's largest image, and an invisible image does not count as shown (LCP).
+     CSS draws the same start pose from the first paint (.is-pre .hero__me img), so nothing jumps */
+  gsap.set('.hero__me img', { y:0, yPercent:12 });   /* y:0: GSAP would otherwise read the CSS start pose as a px offset and keep it */
   /* the row is uncovered by a wipe instead of a fade, so its text is never half-transparent (contrast) */
   const shut = 'inset(-30% -15% 100% -15%)', open = 'inset(-30% -15% -150% -15%)';   /* the margins keep the button shadows */
   gsap.set(rest, { y:18, clipPath:shut });
+  if (chat) gsap.set(chat, { scale:.6, autoAlpha:0 });
   root.classList.remove('is-pre');
   gsap.timeline()
     .to(l1, { yPercent:0, duration:.9, stagger:.09, ease:'expo.out' }, 0)
     .to(split.chars, { yPercent:0, duration:1.0, stagger:.035, ease:'expo.out' }, .08)
-    .to('.hd-in', { y:0, scale:1, duration:.9, ease:'expo.out' }, .15)
-    .to('.hd-in', { rotation:() => innerWidth <= 820 ? -1.5 : -2, duration:1.2, ease:'elastic.out(1,.75)' }, .15)
+    .to('.hero__me img', { yPercent:0, duration:1.2, ease:'expo.out' }, .1)
+    .to(chat, { scale:1, autoAlpha:1, duration:.8, ease:'elastic.out(1,.6)', clearProps:'transform' }, .7)
     .fromTo(rest, { clipPath:shut }, { y:0, clipPath:open, duration:.7, stagger:.06, ease:'expo.out', clearProps:'clipPath' }, .6)
-    .add(() => { introDone = true; Media.update(); Tabs.start(); }, .5)
+    .add(() => { introDone = true; Media.update(); }, .5)
     .add(() => marqueeRamp?.play(), .7)
     .add(() => { gsap.ticker.lagSmoothing(0); split.masks?.forEach(m => { m.style.overflow = 'visible'; }); }, 1.6);   /* masks only serve the rise */
 }
-
 /* ---------------- velocity marquee ---------------- */
 function initMarquee(){
   const el = $('.marquee'), track = el && $('.marquee__track', el); if (!track) return;
@@ -750,13 +686,13 @@ function buildScenes(){
   /* 1 + 6 + 9 + 11. size-gated scenes share ONE context (one revert/refresh per breakpoint); the pin keeps refreshPriority 1 */
   mm.add({ d:D, s:S }, ctx => {
     const { d, s } = ctx.conditions, undo = [];
-    /* 1. hero scroll-exit (the intro owns yPercent + .hd-in; the scroll owns x/y + .hd) */
+    /* 1. hero scroll-exit (the intro owns yPercent + the photo's img; the scroll owns x/y + the .hero__me figure) */
     if (d) {
       const chars = splitHero().chars, n = chars.length;
       gsap.timeline({ scrollTrigger:{ trigger:'.hero', start:'top top', end:'bottom top', scrub:.6, invalidateOnRefresh:true } })
         .to(chars, { x:i => (i - (n - 1) / 2) * innerWidth * .011, y:i => i % 2 ? -30 : 30, ease:'none', duration:1 }, 0)
         .fromTo('.hero__l1', { y:0, opacity:1 }, { y:-30, opacity:.3, ease:'none', duration:1, immediateRender:false }, 0)
-        .to('.hd', { rotation:2, scale:1.06, y:-40, ease:'none', duration:1 }, 0)
+        .to('.hero__me', { yPercent:8, ease:'none', duration:1 }, 0)
         .fromTo('.hero__row', { opacity:1 }, { opacity:0, ease:'none', duration:.4, immediateRender:false }, 0);
     }
     /* 6. stacking cards shrink/darken; positions come from the (non-sticky) .stack; a covered card shows its poster */
@@ -864,7 +800,7 @@ function buildScenes(){
 }
 
 /* ---------------- boot ---------------- */
-const finish = () => { root.classList.remove('is-pre', 'is-intro'); $('.intro')?.remove(); introDone = true; safe(() => Media.update()); safe(() => Tabs.start()); safe(() => marqueeRamp?.play()); };
+const finish = () => { root.classList.remove('is-pre', 'is-intro'); $('.intro')?.remove(); introDone = true; safe(() => Media.update()); safe(() => marqueeRamp?.play()); };
 let setupDone = false;
 const setup = () => { if (setupDone) return; setupDone = true;
   safe(() => Pile.init());          /* sets the pile height before any trigger is measured */
@@ -877,7 +813,7 @@ const setup = () => { if (setupDone) return; setupDone = true;
 };
 const guard = setTimeout(() => { if (hasGSAP) { safe(setup); safe(() => gsap.ticker.lagSmoothing(0)); } finish(); }, 5000);
 safe(initTheme); safe(initHeader); safe(initMenu); safe(initCopy); safe(() => Media.init()); safe(initReveals); safe(initLocalTime);
-safe(initFooterCurtainGate); safe(initAnchors); safe(initToTop); safe(initPrint); safe(initOptionalImages); safe(() => Tabs.init());
+safe(initFooterCurtainGate); safe(initAnchors); safe(initToTop); safe(initPrint);
 if (!hasGSAP) { finish(); safe(() => Pile.init()); clearTimeout(guard); return; }
 gsap.registerPlugin(ScrollTrigger, SplitText, ...(window.ScrambleTextPlugin ? [ScrambleTextPlugin] : []));
 safe(initLenis); if (root.classList.contains('is-intro')) lenis?.stop();
@@ -889,8 +825,8 @@ fonts.then(() => {
   setup(); return null;
 }).then(() => {
   if (root.classList.contains('is-pre')) safe(heroEntrance);
-  else { introDone = true; Media.update(); safe(() => Tabs.start()); gsap.ticker.lagSmoothing(0); }
+  else { introDone = true; Media.update(); gsap.ticker.lagSmoothing(0); }
   clearTimeout(guard);
 }).catch(() => { safe(setup); finish(); clearTimeout(guard); });
-window.__ms = { get lenis(){ return lenis; }, Pile, Media, Tabs };
+window.__ms = { get lenis(){ return lenis; }, Pile, Media };
 })();

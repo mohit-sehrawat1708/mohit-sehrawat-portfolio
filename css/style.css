@@ -187,13 +187,13 @@ font:500 11px/1 var(--mono);letter-spacing:.06em;text-transform:uppercase;white-
 .is-intro .intro{display:grid}
 .is-intro:not(.booted) .intro{animation:bail 0s linear 3.4s forwards}
 .is-pre [data-in]{opacity:0}
-/* the hero device's start pose (js/main.js heroEntrance animates from it). The device is the page's largest image: it is visible
+/* the hero photo's start pose (js/main.js heroEntrance animates from it). The photo is the page's largest image: it is visible
    from the first paint and only moves, never fades, so it counts as shown at once (LCP) */
-.is-pre .hd[data-in]{opacity:1}
-.is-pre .hd-in{transform:translateY(120px) scale(.92) rotate(-9deg)}
+.is-pre .hero__me[data-in]{opacity:1}
+.is-pre .hero__me img{transform:translateY(12%)}
 .is-pre:not(.booted) [data-in]{animation:unhide 0s linear 3.6s forwards}
-.is-pre:not(.booted) .hd-in{animation:unpose 0s linear 3.6s forwards}
-@keyframes unpose{to{transform:var(--rest,none)}}
+.is-pre:not(.booted) .hero__me img{animation:unpose 0s linear 3.6s forwards}
+@keyframes unpose{to{transform:none}}
 .js:not(.booted) .rv{animation:unhide-rv 0s linear 3.5s forwards}
 @keyframes bail{to{visibility:hidden;opacity:0;pointer-events:none}}
 @keyframes unhide{to{opacity:1}}
@@ -249,39 +249,26 @@ font:700 12px/1 var(--grotesk);letter-spacing:.14em;text-transform:uppercase;tra
 .mode__t{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap}
 }
 /* ============ HERO ============ */
-.hero{min-height:calc(100svh - var(--header-h) - var(--marq-h));display:flex}
-.hero__stage{display:flex;flex-direction:column;align-items:center;justify-content:center;padding:clamp(8px,2vh,24px) 0 clamp(8px,1.5vh,16px);position:relative}
-.hero__title{display:flex;flex-direction:column;align-items:center;width:100%;font-weight:inherit;text-wrap:nowrap}
-.hero__l1{display:flex;justify-content:space-between;width:min(100%,calc(var(--f2)*4.53));font:340 var(--f1)/1.05 var(--serif);font-style:italic;letter-spacing:-.025em;white-space:nowrap;gap:.3em}
-.hero__l2{display:block;font:800 var(--f2)/.86 var(--grotesk);text-transform:uppercase;letter-spacing:-.045em;color:var(--brand);white-space:nowrap;margin-top:calc(var(--f1)*-.12)}
-.hd{position:relative;z-index:var(--z-dev);width:var(--dev);margin-top:calc(var(--f2)*-.2)}
-.hd-in{--rest:rotate(-2deg);transform:var(--rest)}
-.hd-float{animation:float 6s ease-in-out infinite alternate}
-@keyframes float{from{transform:translateY(-6px)}to{transform:translateY(6px)}}
-.js .hero:not(.is-visible) .hd-float,.is-paused .hd-float{animation-play-state:paused}
-.hero-dev{position:relative;border-radius:var(--r-browser);overflow:hidden;background:var(--chrome);box-shadow:var(--shadow-device);margin:0}
-.screen__link{position:absolute;inset:0;display:block}
-.t-short{display:none}
-.hero-dev .bbar{height:36px;display:flex;align-items:center;gap:8px;padding:0 12px;background:var(--chrome);color:var(--chrome-dim);font:500 11px/1 var(--mono)}
-.hero-dev .bbar>i{width:9px;height:9px;border-radius:50%;background:#3a3c4a;flex:none}
-.tabs{display:flex;gap:4px;margin-left:10px;min-width:0}
-.tabs [role=tab]{position:relative;padding:6px 10px;border-radius:7px;font:500 10.5px/1.2 var(--mono);letter-spacing:.04em;color:var(--chrome-dim);background:none;border:0;text-transform:uppercase;white-space:nowrap}
-.tabs [aria-selected=true]{background:var(--chrome-tab);color:#eef0f7}
-.tabs [aria-selected=true]::after{content:"";position:absolute;left:10px;right:10px;bottom:2px;height:2px;background:var(--accent-dark);border-radius:2px;transform-origin:0 50%;animation:tabprog 9s linear forwards}
-.hero-dev:not(.tabs-live) .tabs [role=tab]::after,.js .hero:not(.is-visible) .tabs [role=tab]::after{animation-play-state:paused}
-.hero-dev.is-held .tabs [role=tab]::after{animation-play-state:paused}
-.no-autoadvance .tabs [role=tab]::after,.is-paused .tabs [role=tab]::after,.tabs.rs [role=tab]::after{animation:none}
-@keyframes tabprog{from{transform:scaleX(0)}to{transform:scaleX(1)}}
-@media (hover:hover){ .tabs [aria-selected=false]:hover{color:#eef0f7} }
-.tabs [role=tab]:focus-visible{outline-color:#8c9cff;outline-offset:1px}
-.live{margin-left:auto;display:flex;align-items:center;gap:6px;color:#4ade80;letter-spacing:.08em;text-transform:uppercase;white-space:nowrap;padding:6px 0}
-.live::before{content:"";width:7px;height:7px;border-radius:50%;background:#4ade80;box-shadow:0 0 0 3px rgba(74,222,128,.2)}
-.live.is-code{color:#8c9cff} .live.is-code::before{background:#8c9cff;box-shadow:0 0 0 3px rgba(140,156,255,.22)}
-.live .ic{width:11px;height:11px;stroke-width:2}
-.live:focus-visible{outline-color:#8c9cff}
+.hero{--fw:clamp(50px,min(15.2vw,29svh),232px);min-height:calc(100svh - var(--header-h) - var(--marq-h));display:flex;overflow:clip}
+.hero__stage{position:relative;display:flex;flex-direction:column;justify-content:space-between;padding-top:clamp(6px,2vh,24px)}
+/* the title is as wide as the giant word, so "I'm" and "ai/ml" sit over its two ends (the reference layout) */
+.hero__title{position:relative;z-index:1;display:grid;width:max-content;max-width:100%;margin-inline:auto;font-weight:inherit;text-wrap:nowrap}
+.hero__l1{display:flex;justify-content:space-between;padding-inline:calc(var(--fw)*.12) calc(var(--fw)*.2);font:340 calc(var(--fw)*.6)/1.02 var(--serif);font-style:italic;letter-spacing:-.02em;white-space:nowrap}
+.hero__l2{display:block;font:800 var(--fw)/.84 var(--grotesk);text-transform:uppercase;letter-spacing:-.045em;color:var(--brand);white-space:nowrap;margin-top:calc(var(--fw)*.02)}
+/* the cut-out photo stands in front of the giant word, its bottom on the hero's bottom edge */
+.hero__me{position:absolute;z-index:2;left:0;right:0;bottom:0;height:calc(100% - clamp(4px,1vh,16px));margin:0 auto;width:min(50%,620px);pointer-events:none}
+.hero__me img{width:100%;height:100%;object-fit:contain;object-position:50% 100%;transform-origin:50% 100%}
+.hero__me::before{content:"";position:absolute;inset:22% -8% -4%;z-index:-1;border-radius:50%;background:radial-gradient(closest-side,color-mix(in srgb,var(--brand) 30%,transparent),transparent);opacity:0;transition:opacity var(--d2) ease}
+:root[data-theme="dark"] .hero__me::before{opacity:1}
+.hero__chat{position:absolute;left:0;right:0;bottom:clamp(36px,10%,84px);width:max-content;margin-inline:auto;pointer-events:auto;box-shadow:0 14px 34px -12px color-mix(in srgb,var(--brand) 70%,transparent)}
+.hero__row{position:relative;z-index:3;display:grid;grid-template-columns:1fr 1fr;align-items:end;gap:24px;padding:clamp(24px,6vh,64px) 0 clamp(18px,3.5vh,36px);pointer-events:none}
+.hero__row > *{pointer-events:auto}
+.hero__cap{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;line-height:1.6;display:flex;flex-direction:column;max-width:22ch}
+.hero__cap::before{content:"";width:36px;height:2px;background:var(--ink);margin-bottom:14px}
+.hero__note{justify-self:end;text-align:right;font-size:15px;color:var(--muted);line-height:1.5;display:grid;gap:10px;justify-items:end;max-width:24ch}
+.hero__note strong{color:var(--ink);font-weight:600}
+/* shared by the work cards' recordings and every pause button */
 .screen{position:relative;display:block;aspect-ratio:16/10;background:#0d0e15 center/cover no-repeat}
-.shot{position:absolute;inset:0;opacity:0;transition:opacity 400ms ease}
-.shot.is-on{opacity:1}
 .anim img{width:100%;height:100%;object-fit:cover}
 .pz{position:absolute;top:46px;right:10px;width:32px;height:32px;border-radius:50%;border:0;background:rgba(13,14,21,.62);color:#fff;display:grid;place-items:center;z-index:4;
 transition:background-color var(--d1) ease}
@@ -292,43 +279,17 @@ transition:background-color var(--d1) ease}
 @media (hover:hover){ .pz:hover{background:rgba(13,14,21,.85)} }
 .pz:focus-visible{outline-color:#fff;outline-offset:2px;border-radius:50%}
 html:not(.js) .pz{display:none}
-/* -14px: the tilted, floating device clears the buttons by 12-25 px (it used to graze them) */
-.hero__row{width:100%;display:grid;grid-template-columns:1fr auto 1fr;align-items:end;gap:24px;margin-top:-14px;position:relative;z-index:var(--z-row)}
-.hero__cap{font-size:12px;font-weight:700;letter-spacing:.16em;text-transform:uppercase;line-height:1.6;display:flex;flex-direction:column;max-width:26ch}
-.hero__cap::before{content:"";width:36px;height:2px;background:var(--ink);margin-bottom:14px}
-.hero__cap .sep{display:none}
-.hero__cta{display:flex;gap:10px}
-.hero__cta .btn--line{background:var(--ground)}
-.hero__note{justify-self:end;text-align:right;font-size:15px;color:var(--muted);line-height:1.5;display:grid;gap:10px;justify-items:end}
-.hero__note strong{color:var(--ink);font-weight:600}
-@media (max-aspect-ratio:1/1){ .hero{min-height:auto} }
 @media (max-width:820px){
 .hero{min-height:auto}
-.hero__stage{padding-bottom:clamp(16px,3vh,28px)}
-.hero__l1{width:100%}
-.hd{width:100%;margin-top:calc(var(--f2)*-.14)} .hd-in{--rest:rotate(-1.5deg)}
-/* + 1.6vw: room for the corner the -1.5deg tilt drops (about 1.3% of the width) */
-.hero__row{grid-template-columns:1fr;justify-items:start;margin-top:calc(18px + 1.6vw);gap:18px}
-.hero__cap{font-size:10.5px;max-width:none;display:block} .hero__cap::before{display:none} .hero__cap .sep{display:inline}
-.hero__note{justify-self:start;text-align:left;justify-items:start;font-size:14px}
+.hero__stage{padding-top:10px}
+.hero__me{position:relative;inset:auto;height:auto;width:min(92vw,470px);margin:calc(var(--fw)*-.5) auto 0}
+.hero__me img{height:auto}
+.hero__chat{bottom:9%}
+.hero__row{grid-template-columns:1fr;gap:18px;padding:22px 0 28px}
+.hero__cap{font-size:10.5px;max-width:none}
+.hero__note{justify-self:start;text-align:left;justify-items:start;font-size:14px;max-width:none}
 .btn--lg{--h:50px;padding:0 20px;font-size:12px}
 }
-/* short tab label on phones, and on a narrow hero device (short desktop viewports). The long label stays as the
-   accessible name (visually hidden, not display:none) */
-@media (max-width:600px){ .tabs [role=tab]{padding:6px 8px;font-size:9.5px} .t-long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap} .t-short{display:inline} .tabs{margin-left:4px} }
-@container (max-width:340px){ .tabs [role=tab]{padding:6px 8px;font-size:9.5px} .t-long{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap} .t-short{display:inline} .tabs{margin-left:4px} }
-@media (max-width:360px){ .hero-dev .bbar>i:nth-child(n+2){display:none} .live{font-size:10px} }
-@media (pointer:coarse){ .tabs [role=tab]{padding-block:10px} .live{padding-block:10px} }
-/* the bar paints above the screen link (the tabs must never sit under it: tilted, the screen's box reaches up over the bar), and on
-   touch screens it is tall enough to hold the 33 px tap targets above, progress line included */
-.hero-dev .bbar{position:relative;z-index:1}
-@media (pointer:coarse){ .hero-dev.device--browser .bbar{min-height:34px} }
-.me{width:96px;height:96px;border-radius:50%;object-fit:cover;filter:grayscale(1) contrast(1.05);mix-blend-mode:multiply}
-:root[data-theme="dark"] .me{mix-blend-mode:normal}
-/* optional photo (commented out in the hero caption): sits above the caption's rule without changing the hero's height */
-.hero__cap{position:relative}
-.hero__cap .me{position:absolute;left:0;bottom:calc(100% + 16px)}
-@media (max-width:820px){ .hero__cap .me{position:static;margin-bottom:14px} }
 /* ============ STATUS STRIP / MARQUEE ============ */
 .strip{position:relative;height:var(--marq-h);background:var(--cobalt);color:#fff;overflow:clip;display:flex;align-items:center}
 .marquee__track{display:flex;width:max-content;will-change:transform}
@@ -788,7 +749,7 @@ box-shadow:var(--shadow-device);background:#0d0e15;opacity:0;visibility:hidden;w
 /* ============ REDUCED MOTION ============ */
 @media (prefers-reduced-motion:reduce){
 .js .rv{opacity:1;transform:none;transition:none}
-.hd-float{animation:none}
+
 .dot::after{animation:none;opacity:0}
 .shot{transition:none}
 .tabs [role=tab]::after{animation:none}
@@ -814,11 +775,11 @@ main{padding-top:0}
 .pile>li,.pile.is-waiting>li{opacity:1!important}
 .js .rv,.rv{opacity:1!important;transform:none!important}
 [data-in]{opacity:1!important}
-.m>*,.ch,[data-footer-title] *,.hero__l1,.hero__row,.hd{transform:none!important;opacity:1!important;visibility:visible!important}
+.m>*,.ch,[data-footer-title] *,.hero__l1,.hero__row,.hero__me img{transform:none!important;opacity:1!important;visibility:visible!important}
 .statement .w,.statement .ig{opacity:1!important;transform:none!important} .hl{background-size:100% .38em!important}
 .wc--01,.wc--02,.wc--03,.band,.hack-wrap,.plan--now,.quote,.quote.big,.site-footer{background:#fff!important;color:#000!important;box-shadow:none!important}
 .wc--01 *,.wc--02 *,.band *,.plan--now *,.site-footer *,.quote.big *{color:#000!important}
-.wc-media,.hd,.clock-wrap,.plan__media,.ig{display:none!important}
+.wc-media,.hero__me,.clock-wrap,.plan__media,.ig{display:none!important}
 .hero{min-height:0}
 .hero__l2{color:#2340ff!important}
 .print-only{display:block;margin-top:24px}

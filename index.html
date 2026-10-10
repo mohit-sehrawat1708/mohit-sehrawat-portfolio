@@ -70,7 +70,7 @@ if(!rm){d.classList.add('is-pre');
 <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
 <!-- one stylesheet: the fonts (assets/fonts/) and Lenis's few CSS rules are inside it, so nothing from another site blocks the first paint -->
 <link rel="stylesheet" href="css/style.css">
-<link rel="preload" as="image" href="assets/gifs/accesslens-poster.jpg" fetchpriority="high">
+<link rel="preload" as="image" href="assets/me-1140.webp" imagesrcset="assets/me-640.webp 640w, assets/me-1140.webp 1140w" imagesizes="(max-width:820px) 88vw, 46vw" fetchpriority="high">
 
 <!-- libraries: defer = execute in this order after parsing (all verified HTTP 200 on 2026-10-09).
      integrity = SHA-384 of that exact file (Subresource Integrity, checked against the npm package on 2026-10-10): the browser refuses
@@ -127,48 +127,18 @@ if(!rm){d.classList.add('is-pre');
 <!-- ==================== HERO ==================== -->
 <section class="hero" id="top" aria-labelledby="hero-title"><div class="wrap hero__stage">
   <h1 class="hero__title" id="hero-title">
-    <span class="hero__l1" data-in><span class="m"><span>I'm Mohit,</span></span> <span class="m"><span>and I build</span></span></span>
-    <span class="hero__l2" data-in data-hero-word>AI tools</span>
+    <span class="hero__l1" data-in><span class="m"><span>I'm</span></span> <span class="sr-only">Mohit Sehrawat, an</span> <span class="m"><span>ai/ml</span></span></span>
+    <span class="hero__l2" data-in data-hero-word>Developer</span>
   </h1>
-  <div class="hd" data-in><div class="hd-in"><div class="hd-float">
-    <figure class="device device--browser hero-dev" aria-label="Project recordings">
-      <div class="bbar">
-        <i></i><i></i><i></i>
-        <div class="tabs" role="tablist" aria-label="Project recordings">
-          <button type="button" role="tab" id="tab-0" aria-selected="true" aria-controls="hero-screen" tabindex="0" data-tab="0">AccessLens</button>
-          <button type="button" role="tab" id="tab-1" aria-selected="false" aria-controls="hero-screen" tabindex="-1" data-tab="1"><span class="t-long">Readme·Architect</span><span class="t-short" aria-hidden="true">Readme</span></button>
-        </div>
-        <!-- When AccessLens is redeployed, add its live URL here -->
-        <a class="live is-code" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-live><span data-live-t>Code</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-up-right"/></svg><span class="sr-only" data-live-sr2> (opens the AccessLens repository on GitHub in a new tab)</span></a>
-      </div>
-      <div class="screen" id="hero-screen" role="tabpanel" aria-labelledby="tab-0" style="background-image:url(assets/gifs/accesslens-poster.jpg)">
-        <!-- When AccessLens is redeployed, add its live URL here -->
-        <a class="screen__link" href="https://github.com/mohit-sehrawat1708/Audit_Your_Website" target="_blank" rel="noopener" data-cursor="CODE ↗">
-          <span class="sr-only" data-live-sr>AccessLens source code on GitHub (opens in a new tab)</span>
-          <picture class="anim shot is-on" data-anim data-shot="0">
-            <source type="image/webp" srcset="assets/gifs/accesslens-poster.jpg" data-srcset="assets/gifs/accesslens.webp">
-            <img src="assets/gifs/accesslens-poster.jpg" data-poster="assets/gifs/accesslens-poster.jpg" data-src="assets/gifs/accesslens.gif" width="960" height="600" alt="Screen recording of AccessLens, running locally from its repository, with a URL being typed into the audit field." loading="eager" fetchpriority="high" decoding="async">
-          </picture>
-          <picture class="anim shot" data-anim data-shot="1" data-inactive aria-hidden="true">
-            <source type="image/webp" srcset="assets/gifs/readme-architect-poster.jpg" data-srcset="assets/gifs/readme-architect-720.webp">
-            <img src="assets/gifs/readme-architect-poster.jpg" data-poster="assets/gifs/readme-architect-poster.jpg" data-src="assets/gifs/readme-architect.gif" width="960" height="600" alt="Screen recording of the live Readme-Architect AI website scrolling through its landing page and feature cards." loading="lazy" decoding="async">
-          </picture>
-        </a>
-      </div>
-      <button class="pz" type="button" data-pause aria-pressed="false"><svg class="ic ic--pause" aria-hidden="true"><use href="#i-pause"/></svg><svg class="ic ic--play" aria-hidden="true"><use href="#i-play"/></svg><span class="sr-only">Pause animations</span></button>
-    </figure>
-  </div></div></div>
+  <!-- PHOTO: assets/me-1140.webp and me-640.webp are a transparent cut-out (1140×1277). To swap it, export a new cut-out at the
+       same proportions under the same names. -->
+  <figure class="hero__me" data-in>
+    <img src="assets/me-1140.webp" srcset="assets/me-640.webp 640w, assets/me-1140.webp 1140w" sizes="(max-width:820px) 88vw, 46vw"
+         width="1140" height="1277" alt="Mohit Sehrawat, sitting at a desk with his hands folded" fetchpriority="high" decoding="async">
+    <a class="btn btn--brand btn--lg hero__chat" href="#contact" data-magnetic>Let's chat</a>
+  </figure>
   <div class="hero__row">
-    <p class="hero__cap" data-in>
-      <!-- OPTIONAL PHOTO: save a square photo (at least 400px) as assets/me.jpg, then delete only the comment markers at the start
-           and end of the next line, so the img tag itself is left. It shows as a 96px greyscale circle just above this caption.
-           If the file is missing, js/main.js removes the tag. -->
-      <!-- <img class="me" src="assets/me.jpg" alt="" width="96" height="96" data-optional> -->
-      <span>Mohit Sehrawat</span><span class="sep" aria-hidden="true"> · </span><span>B.Tech CSE (AI)</span><span class="sep" aria-hidden="true"> · </span><span>Gurugram University</span><span class="sep" aria-hidden="true"> · </span><span>Class of 2027</span></p>
-    <div class="hero__cta" data-in>
-      <a class="btn btn--brand btn--lg" href="#work" data-magnetic>See the work <svg class="ic ic--down" aria-hidden="true"><use href="#i-arrow-down"/></svg></a>
-      <a class="btn btn--line btn--lg" href="assets/Mohit_Sehrawat_Resume.pdf" target="_blank" rel="noopener" data-magnetic>Résumé<span class="sr-only"> (PDF, opens in a new tab)</span></a>
-    </div>
+    <p class="hero__cap" data-in>AI tools, data pipelines and full-stack builds.</p>
     <div class="hero__note" data-in>
       <p><span class="dot" aria-hidden="true"></span><strong>Open to internships</strong><br>&amp; entry-level roles.</p>
       <button class="rc" type="button" data-menu-open data-focus="#tldr" aria-controls="menu" aria-expanded="false"><span class="rc__t">The 30-second version</span> <svg class="ic" aria-hidden="true"><use href="#i-arrow-right"/></svg></button>

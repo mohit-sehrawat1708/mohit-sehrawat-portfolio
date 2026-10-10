@@ -1,13 +1,13 @@
 # Mohit Sehrawat: portfolio
 
-A one-page portfolio: hero with real screen recordings, about, three projects, toolkit, experience, hackathons and contact.
+A one-page portfolio: hero with a cut-out photo, about, three projects, toolkit, experience, hackathons and contact.
 It is plain HTML, CSS and JavaScript with no build step and nothing to install. It is hosted on Vercel:
 https://mybasicportfolio.vercel.app
 
 ```
 index.html                       all page content
 css/style.css                    all styles (light + dark theme)
-js/main.js                       motion, theme toggle, menu, hero tabs
+js/main.js                       motion, theme toggle, menu, physics pills
 js/404-theme.js                  lets the 404 page use the light/dark mode chosen on the portfolio
 assets/Mohit_Sehrawat_Resume.pdf every résumé link points here (also /resume and /cv)
 assets/og-image.png              link-preview image (1200×630)
@@ -162,7 +162,7 @@ fingerprint, the `'sha256-…'` value in the `script-src` part of the CSP. Style
   red message "Executing inline script violates the following Content Security Policy directive…". It names the new value, for
   example `'sha256-AbC…='`. Put that value into `vercel.json` in place of the old `'sha256-…'`, then push.
 - **Do not add inline event handlers** (`onclick="…"`, `onerror="…"`) or new inline `<script>` blocks: the CSP blocks them. Put
-  the code in `js/main.js` instead (the optional photo uses `data-optional` for this reason). The JSON-LD block
+  the code in `js/main.js` instead. The JSON-LD block
   (`<script type="application/ld+json">`) is data, never runs, and needs no fingerprint.
 - **Loading something from another site** (a new CDN, an analytics script, an embed) needs its address added to the matching
   part of the CSP (`script-src`, `style-src`, `img-src`, `connect-src`, `frame-src`).
@@ -194,59 +194,53 @@ All text is in `index.html`. Each section starts with a banner comment such as `
 | Section | Lines in `index.html` | Notes |
 |---|---|---|
 | Page title, description, link-preview text | 6–7, 20–21, 27–28 | Lines 20–21 are for most sites (Open Graph), 27–28 for X/Twitter. Keep them the same. The JSON-LD block (lines 37–52) has a longer description. |
-| Hero (headline, recordings, caption, buttons) | 127–177 | The recording tabs' link, label and screen-reader text are also set in `js/main.js` lines 80–85. Change both. |
-| Print-only "30-second version" | 179–190 | This copies the menu's 30-second version, so keep the two in sync. |
-| Status strip (scrolling ticker) | 192–214 | The phrases appear twice (the second copy makes the loop seamless). Edit both. |
-| About (statement, 4 facts, résumé link) | 216–231 | The 300 and 40 count up from `data-count="…"` (lines 225–226). Each also has hidden screen-reader text next to it. Change both. |
-| Work (index rows + 3 project cards) | 233–357 | |
-| Toolkit (draggable pills + full skills list) | 359–394 | |
-| Experience (TPO, Rational Go, education) | 396–453 | |
-| Hackathons (intro + clock, 5 passes, LinkedIn line) | 455–503 | The passes are lines 475–496. |
-| On the side | 505–527 | |
-| Contact + footer | 531–572 | |
-| Menu + "30-second version" | 574–602 | |
+| Hero ("I'm ai/ml DEVELOPER", photo, Let's chat, caption, note) | 127–147 | The photo files are described under "Change the photo" below. |
+| Print-only "30-second version" | 149–160 | This copies the menu's 30-second version, so keep the two in sync. |
+| Status strip (scrolling ticker) | 162–184 | The phrases appear twice (the second copy makes the loop seamless). Edit both. |
+| About (statement, 4 facts, résumé link) | 186–201 | The 300 and 40 count up from `data-count="…"` (lines 195–196). Each also has hidden screen-reader text next to it. Change both. |
+| Work (index rows + 3 project cards) | 203–327 | |
+| Toolkit (draggable pills + full skills list) | 329–364 | |
+| Experience (TPO, Rational Go, education) | 366–423 | |
+| Hackathons (intro + clock, 5 passes, LinkedIn line) | 425–473 | The passes are lines 446–465. |
+| On the side | 475–497 | |
+| Contact + footer | 501–542 | |
+| Menu + "30-second version" | 544–572 | |
 
 - **Email:** the address appears in several places (including the JSON-LD block). Search for `m29247396@gmail.com` and replace every match.
 - **Résumé:** replace `assets/Mohit_Sehrawat_Resume.pdf` with a new file of **exactly the same name** (same capitals), and every link and `/resume` update.
 
-## Add a photo (optional)
+## Change the photo
 
-1. Save a square photo, at least 400 px, as `assets/me.jpg` (all lower case: `Me.jpg` or `me.JPG` would not be found on Vercel).
-2. In `index.html`, find the `OPTIONAL PHOTO` comment (lines 163–165, inside the hero caption). Line 166 is the photo itself,
-   switched off:
-   `<!-- <img class="me" src="assets/me.jpg" alt="" width="96" height="96" data-optional> -->`.
-   On that line, remove only the `<!-- ` at the start and the ` -->` at the end. Keep the `<img>` tag itself, including
-   `data-optional`. You can delete the three instruction lines (163–165) or leave them.
+The hero photo is a transparent cut-out (no background) in two sizes: `assets/me-1140.webp` (1140×1277) and
+`assets/me-640.webp` (640×717). The browser picks the size that fits the screen.
 
-The photo shows as a 96 px greyscale circle just above the hero caption. If the file is missing, `js/main.js` removes the tag (an inline `onerror` would be blocked by the CSP).
+To use a different photo:
+1. Cut out the background (for example with remove.bg or Photoshop) and export a PNG with transparency, roughly 1140 px wide.
+   Crop it so the head is at the top edge and the hands or table are at the bottom edge.
+2. Save it as WebP under the same two names, at 1140 px and 640 px wide, all lower case (`Me-1140.WEBP` would not be found on
+   Vercel). If the proportions change, update `width`/`height` on the `<img>` in the hero.
+3. The duotone blue look is part of the image itself; CSS does not recolour it.
 
 ## When AccessLens has a live URL again
 
 For now the site links AccessLens only to its code, because the old deployment is gone. Every place to change has the comment `<!-- When AccessLens is redeployed, add its live URL here -->`:
 
-- `index.html` **line 142**, the hero "Code" pill: set the live URL as `href`, remove the `is-code` class, change `Code` to
-  `Live`, and update the hidden `data-live-sr2` text at the end of the line.
-- **Lines 146–147**, the hero screen link: set the live URL as `href`, use `data-cursor="OPEN ↗"`, and update the hidden
-  `data-live-sr` text on line 147.
-- The hero tabs rewrite both of these on every tab switch, so also edit the first entry in `js/main.js` **line 81** the same
-  way: the URL as `href`, `cursor:'OPEN ↗'`, `live:'Live'`, `code:false`, and the two `sr` texts. (Until the first tab
-  switch the page shows what `index.html` says, so both places must agree.)
-- Keep the alt texts (lines 150 and 315), the address bar label `localhost:3000 · accesslens` (line 312) and the caption
-  "Real screen recording · local build" (line 318) for as long as the recording is the local build.
-- **Line 247:** work index row 02. Add a "Live" link like the one on row 01 (line 243).
-- **Line 304:** card 02 buttons. Make "Open live" the first button and keep "Code" second, like card 01 (lines 271–272).
-- **Line 310:** card 02 recording link (also its `data-cursor` and `aria-label`; the label must start with the words shown on
+- Keep the alt text (line 285), the address bar label `localhost:3000 · accesslens` (line 282) and the caption
+  "Real screen recording · local build" (line 288) for as long as the recording is the local build.
+- **Line 218:** work index row 02. Add a "Live" link like the one on row 01 (line 213).
+- **Lines 274–275:** card 02 buttons. Make "Open live" the first button and keep "Code" second, like card 01 (lines 240–242).
+- **Line 280:** card 02 recording link (also its `data-cursor` and `aria-label`; the label must start with the words shown on
   the card, "localhost:3000 · accesslens Real screen recording · local build", so voice-control users can say them).
-- **Line 554:** footer project list.
-- Optionally change the card 02 chip on line 293 from "Open source" to "Live".
+- **Line 524:** footer project list.
+- Optionally change the card 02 chip on line 263 from "Open source" to "Live".
 
 If the live AccessLens is on a different site, nothing in the CSP needs to change: links to other sites are always allowed.
 
 ## Readme-Architect AI: check the wording
 
-Line 257 has the comment `<!-- Role on this project: confirm wording with Mohit (repo is a fork of Deepender25/Readme-Architect-AI) -->`.
+Line 227 has the comment `<!-- Role on this project: confirm wording with Mohit (repo is a fork of Deepender25/Readme-Architect-AI) -->`.
 
-Card 01 (lines 258–289) and index row 01 describe the product and its stack. They say nothing about who built which part, because the GitHub repo is a fork. Once you're happy with how the card describes your role, delete the comment.
+Card 01 (lines 228–259) and index row 01 describe the product and its stack. They say nothing about who built which part, because the GitHub repo is a fork. Once you're happy with how the card describes your role, delete the comment.
 
 ## Recordings and animations (`assets/gifs/`)
 
@@ -258,8 +252,8 @@ Each animation has three files:
 
 | Files | Where | What it is |
 |---|---|---|
-| `accesslens.*` | Hero tab 1, card 02 | Real screen recording of AccessLens running locally (960×600) |
-| `readme-architect-720.webp`, `readme-architect.gif`, `readme-architect-poster.jpg` | Hero tab 2, card 01 | Real screen recording of the live site (WebP 720×450, GIF 864×540, poster 960×600) |
+| `accesslens.*` | Card 02, project-list preview | Real screen recording of AccessLens running locally (960×600) |
+| `readme-architect-720.webp`, `readme-architect.gif`, `readme-architect-poster.jpg` | Card 01, project-list preview | Real screen recording of the live site (WebP 720×450, GIF 864×540, poster 960×600) |
 | `attendance-phone.*` | Card 03 | Illustration of the AI-Attendance flow, not a recording (360×760) |
 | `terminal-pipeline.*` | Experience, TPO card | Illustration of the data pipeline (640×400) |
 | `hackathon-clock.*` | Hackathons | Decorative countdown clock (480×480) |
